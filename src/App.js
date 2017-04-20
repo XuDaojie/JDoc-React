@@ -56,7 +56,7 @@ class App extends Component {
   }
 
   handleLoginSuccess() {
-
+    this.setState({contentMain: <ProjectList/>});
   }
 
   openDialog() {

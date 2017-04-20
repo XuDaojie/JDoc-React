@@ -7,6 +7,10 @@ import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
+import $ from 'jquery/dist/jquery.min';
+
+const BASE_URL = "http://localhost:8080/JDoc/";
+
 const styles = {
   root: {
     display: 'flex',
@@ -24,66 +28,47 @@ const styles = {
   },
 };
 
-const tilesData = [
-  {
-    img: 'images/test1.png',
-    title: 'Breakfast',
-    author: 'jill111',
-  },
-  {
-    img: 'images/test2.png',
-    title: 'Tasty burger',
-    author: 'pashminu',
-  },
-  {
-    img: 'images/test3.png',
-    title: 'Camera',
-    author: 'Danson67',
-  },
-  {
-    img: 'images/test4.png',
-    title: 'Morning',
-    author: 'fancycrave1',
-  },
-  {
-    img: 'images/test2.jpg',
-    title: 'Morning',
-    author: 'fancycrave1',
-  },
-  {
-    img: 'images/test6.png',
-    title: 'Morning',
-    author: 'fancycrave1',
-  },
-  {
-    img: 'images/test7.png',
-    title: 'Morning',
-    author: 'fancycrave1',
-  },
-];
+class ProjectList extends React.Component {
 
-/**
- * A simple example of a scrollable `GridList` containing a [Subheader](/#/components/subheader).
- */
-const ProjectList = () => (
-  <div style={styles.root}>
-    <GridList
-      cellHeight={180}
-      cols={4}
-      style={styles.gridList}>
-      <Subheader>December</Subheader>
-      {tilesData.map((tile) => (
-        <GridTile
-          key={tile.img}
-          title={tile.title}
-          subtitle={<span>by <b>{tile.author}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white"/>
-          </IconButton>}>
-          <img src={tile.img} />
-        </GridTile>
-      ))}
-    </GridList>
-  </div>
-);
+  constructor(props) {
+    super(props);
+    this.state = {
+      content: [],
+    };
+  }
+
+  componentDidMount() {
+    $.get(
+      BASE_URL + "project_list.do",
+      {
+        user_id: 1,
+      },
+      data => {
+        this.setState({content: data});
+      }
+    )
+  }
+
+  render() {
+    return <div style={styles.root}>
+      <GridList
+        cellHeight={180}
+        cols={4}
+        style={styles.gridList}>
+        <Subheader>December</Subheader>
+        {this.state.content.map((tile) => (
+          <GridTile
+            key={tile.id}
+            title={tile.name}
+            subtitle={<span>by <b>{tile.name}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white"/>
+            </IconButton>}>
+            <img src="images/test1.png"/>
+          </GridTile>
+        ))}
+      </GridList>
+    </div>;
+  }
+}
 
 export default ProjectList;

@@ -75,7 +75,7 @@ class LoginDialog extends React.Component {
         password: pwdValue,
       },
       data => {
-        console.log(data);
+        // console.log(data);
         if (data.code === 0) {
           this.setState({loginText: "登录成功"});
           setTimeout(() => {

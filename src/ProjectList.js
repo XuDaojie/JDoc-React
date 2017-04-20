@@ -68,6 +68,11 @@ class ProjectList extends React.Component {
     console.log(this.state.content);
   }
 
+  // 方法名必须用这个
+  _tileClick(val, proxyObj) {
+    
+  }
+
   render() {
     return <div>
       <div style={styles.root}>
@@ -78,18 +83,23 @@ class ProjectList extends React.Component {
           <Subheader>December</Subheader>
           {this.state.content.map((tile) => (
             <GridTile
+              style={{ cursor: 'pointer'}}
               key={tile.id}
               title={tile.name}
               subtitle={<span>by <b>{tile.name}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white"/>
-              </IconButton>}>
+              actionIcon={<IconButton><StarBorder color="white"
+              />
+              </IconButton>}
+              onTouchTap={this._tileClick.bind(this, tile.id)}>
               <img src="images/test1.png"/>
             </GridTile>
+
           ))}
         </GridList>
       </div>
       <FloatingActionButton secondary={true}
                             style={{marginRight: 16, position: 'fixed', right: 64, bottom: 64}}
+                            zDepth={5}
                             onTouchTap={this.handleFabClick.bind(this)}>
         <ContentAdd>新建项目</ContentAdd>
       </FloatingActionButton>

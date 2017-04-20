@@ -62,7 +62,10 @@ class ProjectList extends React.Component {
     this.setState({openCreate: false});
   }
 
-  handleCreateProjectSuccess() {
+  handleCreateProjectSuccess(newProject) {
+    this.state.content.push(newProject);
+    this.setState({});
+    console.log(this.state.content);
   }
 
   render() {

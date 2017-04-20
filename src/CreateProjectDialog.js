@@ -73,17 +73,17 @@ class CreateProjectDialog extends React.Component {
         description: desValue,
         password: pwdValue,
       },
-      data => {
+      result => {
         // console.log(data);
-        if (data.code === 0) {
+        if (result.code === 0) {
           this.setState({btnText: "保存成功"});
           setTimeout(() => {
             this.handleClose();
             // this.setState({}, this.props.onLoginSuccess());
-            this.props.onRequestSuccess();
+            this.props.onRequestSuccess(result.data);
           }, 1500);
         } else {
-          this.setState({nameErrorMsg: data.msg});
+          this.setState({nameErrorMsg: result.msg});
           this.setState({saveDisabled: false});
           this.setState({progress: style.progressNone});
         }

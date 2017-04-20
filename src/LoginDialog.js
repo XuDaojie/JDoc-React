@@ -38,6 +38,10 @@ class LoginDialog extends React.Component {
     };
   }
 
+  static propTypes = {
+    onLoginSuccess: React.PropTypes.func.isRequired,
+  };
+
   componentWillReceiveProps(nextProps) {
     this.setState({open: nextProps.open});
   }
@@ -55,7 +59,7 @@ class LoginDialog extends React.Component {
 
   handleLoginTap() {
     const userValue = this.refs.userInput.input.value;
-    const pwdValue = this.refs.userInput.input.value;
+    const pwdValue = this.refs.pwdInput.input.value;
     if (userValue === '' || !userValue) {
       this.setState({userErrorMsg: "用户名不能为空"});
       return;
@@ -71,11 +75,13 @@ class LoginDialog extends React.Component {
         password: pwdValue,
       },
       data => {
-        // console.log(data);
+        console.log(data);
         if (data.code === 0) {
           this.setState({loginText: "登录成功"});
           setTimeout(() => {
             this.handleClose();
+            // this.setState({}, this.props.onLoginSuccess());
+            this.props.onLoginSuccess();
           }, 1500);
         } else {
           this.setState({pwdErrorMsg: data.msg});

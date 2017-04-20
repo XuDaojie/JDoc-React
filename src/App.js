@@ -37,9 +37,11 @@ class App extends Component {
   constructor(props) {
     injectTapEventPlugin();
     super(props);
-    this.state = {open: false, openLogin: false};
+    this.state = {
+      open: false, openLogin: false,
+      contentMain: <div>内容</div>
+    };
   }
-
 
   handleClick() {
     this.setState({open: !this.state.open});
@@ -51,6 +53,10 @@ class App extends Component {
 
   handleDialogClose() {
     this.state = {openLogin: false};
+  }
+
+  handleLoginSuccess() {
+
   }
 
   openDialog() {
@@ -73,9 +79,10 @@ class App extends Component {
             </Drawer>
             <LoginDialog
               open={this.state.openLogin}
-              onRequestClose={this.handleDialogClose.bind(this)}/>
+              onRequestClose={this.handleDialogClose.bind(this)}
+              onLoginSuccess={this.handleLoginSuccess.bind(this)}/>
           </AppBar>
-          <ProjectList/>
+          {this.state.contentMain}
         </div>
       </MuiThemeProvider>
     );

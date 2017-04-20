@@ -29,6 +29,9 @@ import ProjectList from "./ProjectList";
 //     );
 //   }
 // }
+
+// const BASE_URL = "http://localhost:8080/JDoc/";
+
 class App extends Component {
 
   constructor(props) {

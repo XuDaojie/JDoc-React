@@ -31,7 +31,6 @@ justifyContent: "space-between",
     // overflowY: 'auto',
   },
   markdown: {
-
   },
 };
 
@@ -40,7 +39,6 @@ class ProjectContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      markdownView: <div/>
     };
   }
 
@@ -50,13 +48,14 @@ class ProjectContent extends React.Component {
     $.get(
       BASE_URL + "markdown.do",
       {
+        // todo markdown_id: 5
         id: 5,
       },
       result => {
         if (result.code === 0) {
           $("#markdown_div").html(marked(result.data.content));
         } else {
-          this.setState({markdownView: <h3>内容不存在</h3>});
+          $("#markdown_div").html(<div>内容不存在</div>);
         }
       }
     )

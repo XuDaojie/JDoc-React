@@ -67,23 +67,27 @@ class ProjectContent extends React.Component {
       <Drawer open={this.state.open} docked={false}
               onRequestChange={(open) => {
                 this.setState({open: open}, this.props.onRequestChange(open));
-                console.log("drawer onRequestChange: " + open);
               }}>
         <AppBar/>
         <List>
           {this.props.data.map(function (item) {
-            if (item.nested) { // 空会自动转为false
+            if (item.markdownList) { // 空会自动转为false
               return <ListItem
                 key={item.id}
-                primaryText="Expand"
+                primaryText={item.name}
+                secondaryText={item.description}
                 initiallyOpen={false}
-                nestedItems={[
-                  <ListItem key={1} primaryText="Nested"/>,
-                  <ListItem key={2} primaryText="Nested"/>]}/>;
+                nestedItems={item.markdownList.map(function (md) {
+                  return<ListItem
+                    key={md.id}
+                    primaryText={md.name}
+                    initiallyOpen={false}/>;
+                })}/>;
             } else {
               return <ListItem
                 key={item.id}
-                primaryText="Expand"
+                primaryText={item.name}
+                secondaryText={item.description}
                 initiallyOpen={false}/>
             }
           })}

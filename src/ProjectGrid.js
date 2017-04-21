@@ -48,8 +48,10 @@ class ProjectList extends React.Component {
       {
         user_id: 1,
       },
-      data => {
-        this.setState({content: data});
+      result => {
+        if (result.code === 0) {
+          this.setState({content: result.data});
+        }
       }
     )
   }
@@ -65,7 +67,6 @@ class ProjectList extends React.Component {
   handleCreateProjectSuccess(newProject) {
     this.state.content.push(newProject);
     this.setState({});
-    console.log(this.state.content);
   }
 
   // 方法名必须用这个
@@ -82,7 +83,7 @@ class ProjectList extends React.Component {
           <Subheader>December</Subheader>
           {this.state.content.map((tile) => (
             <GridTile
-              style={{ cursor: 'pointer'}}
+              style={{cursor: 'pointer'}}
               key={tile.id}
               title={tile.name}
               subtitle={<span>by <b>{tile.name}</b></span>}

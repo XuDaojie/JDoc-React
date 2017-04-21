@@ -70,7 +70,6 @@ class ProjectList extends React.Component {
 
   // 方法名必须用这个
   _tileClick(val, proxyObj) {
-    
   }
 
   render() {

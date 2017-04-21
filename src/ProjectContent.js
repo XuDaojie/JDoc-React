@@ -4,12 +4,36 @@
 import React from 'react';
 import marked from 'marked';
 
+import {List, ListItem} from 'material-ui/List';
+import ActionGrade from 'material-ui/svg-icons/action/grade';
+import ContentInbox from 'material-ui/svg-icons/content/inbox';
+import ContentDrafts from 'material-ui/svg-icons/content/drafts';
+import ContentSend from 'material-ui/svg-icons/content/send';
+import Subheader from 'material-ui/Subheader';
+import Toggle from 'material-ui/Toggle';
 
 import $ from 'jquery/dist/jquery.min';
 
 const BASE_URL = "http://localhost:8080/JDoc/";
 
-const style = {};
+const style = {
+  root: {
+    display: "flex",
+justifyContent: "space-between",
+
+    marginTop: 16,
+    marginLeft: 8,
+    marginRight: 8,
+  },
+  list: {
+    width: 500,
+    // height: 450,
+    // overflowY: 'auto',
+  },
+  markdown: {
+
+  },
+};
 
 class ProjectContent extends React.Component {
 
@@ -20,8 +44,7 @@ class ProjectContent extends React.Component {
     };
   }
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
   componentDidMount() {
     $.get(
@@ -30,9 +53,9 @@ class ProjectContent extends React.Component {
         id: 5,
       },
       result => {
-        if(result.code===0){
+        if (result.code === 0) {
           $("#markdown_div").html(marked(result.data.content));
-        }else{
+        } else {
           this.setState({markdownView: <h3>内容不存在</h3>});
         }
       }
@@ -44,7 +67,17 @@ class ProjectContent extends React.Component {
 
   render() {
     return (
-      <div id="markdown_div">{this.state.markdownView}</div>
+      <div style={style.root}>
+        <div id="markdown_div"/>
+        <List>
+          <ListItem primaryText="Sent mail"/>
+          <ListItem primaryText="Sent mail"/>
+          <ListItem primaryText="Sent mail"/>
+          <ListItem primaryText="Sent mail"/>
+          <ListItem primaryText="Sent mail"/>
+        </List>
+
+      </div>
     )
   };
 

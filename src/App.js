@@ -45,6 +45,7 @@ class App extends Component {
       openLogin: false,
 
       drawerData: [],
+      markdownId: null,
     };
   }
 
@@ -95,13 +96,17 @@ class App extends Component {
               data={this.state.drawerData}
               onRequestChange={(openDrawer) => {
                 this.setState({openDrawer})
-              }}/>
+              }}
+              onNestedListToggle={key =>{
+                this.setState({markdownId: key});
+              }}
+            />
             <LoginDialog
               open={this.state.openLogin}
               onRequestClose={this.handleDialogClose.bind(this)}
               onLoginSuccess={this.handleLoginSuccess.bind(this)}/>
           </AppBar>
-          <ProjectContent/>
+          <ProjectContent markdownId={this.state.markdownId} />
         </div>
       </MuiThemeProvider>
     );

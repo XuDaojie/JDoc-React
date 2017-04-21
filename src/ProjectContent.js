@@ -19,7 +19,8 @@ const BASE_URL = "http://localhost:8080/JDoc/";
 const style = {
   root: {
     display: "flex",
-justifyContent: "space-between",
+    // justifyContent: "space-between",
+    justifyContent: "center",
 
     marginTop: 16,
     marginLeft: 8,
@@ -39,43 +40,50 @@ class ProjectContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      markdownId: null,
     };
   }
 
   static propTypes = {};
 
   componentDidMount() {
-    $.get(
-      BASE_URL + "markdown.do",
-      {
-        // todo markdown_id: 5
-        id: 5,
-      },
-      result => {
-        if (result.code === 0) {
-          $("#markdown_div").html(marked(result.data.content));
-        } else {
-          $("#markdown_div").html(<div>内容不存在</div>);
-        }
-      }
-    )
+    this.loadMarkdown();
   }
 
   componentWillReceiveProps(nextProps) {
+    if(nextProps.markdownId !== this.state.markdownId){
+      this.setState({markdownId: nextProps.markdownId});
+      console.log("componentWillReceiveProps" + nextProps.markdownId);
+      this.loadMarkdown();
+    }
+  }
+
+  loadMarkdown(){
+    console.log("loadMarkdown" + this.state.markdownId);
+    if(this.state.markdownId !== null){
+      $.get(
+        BASE_URL + "markdown.do",
+        {
+          id: this.state.markdownId,
+        },
+        result => {
+          if (result.code === 0) {
+            $("#markdown_div").html(marked(result.data.content));
+          } else {
+            $("#markdown_div").html(<div>内容不存在</div>);
+          }
+        }
+      )
+    } else {
+      console.log("内容不存在");
+      $("#markdown_div").html(marked("> 内容不存在"));
+    }
   }
 
   render() {
     return (
       <div style={style.root}>
         <div id="markdown_div"/>
-        <List>
-          <ListItem primaryText="Sent mail"/>
-          <ListItem primaryText="Sent mail"/>
-          <ListItem primaryText="Sent mail"/>
-          <ListItem primaryText="Sent mail"/>
-          <ListItem primaryText="Sent mail"/>
-        </List>
-
       </div>
     )
   };

@@ -72,6 +72,10 @@ ansi-escapes@^1.1.0, ansi-escapes@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
 
+ansi-font@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/ansi-font/-/ansi-font-0.0.2.tgz#890301bd5841462fd39c0b7709afd1f525143331"
+
 ansi-html@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/ansi-html/-/ansi-html-0.0.5.tgz#0dcaa5a081206866bc240a3b773a184ea3b88b64"
@@ -3301,6 +3305,12 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
+markdown-js@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/markdown-js/-/markdown-js-0.0.3.tgz#416fc9e4afb650f2cc02bf9ffb030e8cd487793e"
+  dependencies:
+    test ">=0.0.5"
+
 marked-terminal@^1.6.2:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/marked-terminal/-/marked-terminal-1.7.0.tgz#c8c460881c772c7604b64367007ee5f77f125904"
@@ -4944,6 +4954,12 @@ test-exclude@^3.3.0:
     object-assign "^4.1.0"
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
+
+test@>=0.0.5:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/test/-/test-0.6.0.tgz#5986ac445ec17754322512d104ba32c8a63e938e"
+  dependencies:
+    ansi-font "0.0.2"
 
 text-table@~0.2.0:
   version "0.2.0"

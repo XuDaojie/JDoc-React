@@ -13,3 +13,7 @@ https://github.com/callemall/material-ui/issues/5208
 
 - Material UI GridTile没有onTouchTap
 https://github.com/callemall/material-ui/issues/2413
+
+- JWT
+http://blog.rainy.im/2015/06/10/react-jwt-pretty-good-practice/
+http://blog.leapoahead.com/2015/09/06/understanding-jwt/

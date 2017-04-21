@@ -13,6 +13,7 @@ import AppBar from 'material-ui/AppBar';
 
 import LoginDialog from "./LoginDialog";
 import ProjectList from "./ProjectList";
+import ProjectContent from "./ProjectContent";
 
 // class App extends Component {
 //   render() {
@@ -39,7 +40,7 @@ class App extends Component {
     super(props);
     this.state = {
       open: false, openLogin: false,
-      contentMain: <div>内容</div>
+      contentMain: <ProjectContent/>
     };
   }
 

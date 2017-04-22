@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import './App.css';
 
 import $ from 'jquery/dist/jquery.min';
+import jsrsasign from 'jsrsasign';
+// import b64x from './lib/base64x-1.1.min';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
@@ -82,6 +84,43 @@ class App extends Component {
   }
 
   render() {
+    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkiLCJuYW1lIjoiSm9obiBEb2UiLCJleHAiOjE0MjAwNDUyNjEsImFkbWluIjp0cnVlfQ.Uyn5F42wOMwgkzU15h2BVdcBtkmHfHfp_IYr2k3OCIM";
+    const jws = jsrsasign.KJUR.jws;
+    // 只验证是否能解析
+    var isValid = jws.JWS.verifyJWT(token, "secret", {alg: ['HS256']});
+    // 验证 是否能解析、过期时间
+    isValid = jws.JWS.verifyJWT(token, "secret", {
+      alg: ['HS256'],
+      verifyAt: jws.IntDate.get('20160601000000Z')
+    });
+    console.log(isValid);
+    // 获取数据
+    var headerObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[0]));
+    var payloadObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[1]));
+    console.log(headerObj);
+
+    // const oHeader = {alg: "HS256", typ: "JWT"};
+    // const oPayload = {sub: "123456789", name: "John Doe", exp: 1420045261, admin: true};
+    // const sHeader = JSON.stringify(oHeader);
+    // const sPayload = JSON.stringify(oPayload);
+    // const sJWT = jsrsasign.KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "secret");
+    // console.log(sJWT);
+
+    const oHeader = {alg: "HS256", typ: "JWT"};
+    const oPayload = {user_id: 1,};
+    const sHeader = JSON.stringify(oHeader);
+    const sPayload = JSON.stringify(oPayload);
+    const sJWT = jsrsasign.KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "jdoc");
+    $.get(
+      BASE_URL + "api/project",
+      {
+        token: sJWT,
+      },
+      function (data, status) {
+        console.log(status);
+      });
+
     return (
       <MuiThemeProvider>
         <div>
@@ -97,7 +136,7 @@ class App extends Component {
               onRequestChange={(openDrawer) => {
                 this.setState({openDrawer})
               }}
-              onNestedListToggle={key =>{
+              onNestedListToggle={key => {
                 this.setState({markdownId: key});
               }}
             />
@@ -106,7 +145,7 @@ class App extends Component {
               onRequestClose={this.handleDialogClose.bind(this)}
               onLoginSuccess={this.handleLoginSuccess.bind(this)}/>
           </AppBar>
-          <ProjectContent markdownId={this.state.markdownId} />
+          <ProjectContent markdownId={this.state.markdownId}/>
         </div>
       </MuiThemeProvider>
     );

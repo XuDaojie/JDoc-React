@@ -48,11 +48,15 @@ const sJWT = jsrsasign.KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "secret");
 console.log(sJWT);
 ```
 
-- react怎么动态渲染一个div内的html
+- react怎么动态渲染一个div内的html<br>
 https://segmentfault.com/q/1010000002961788
 
-- React 组件之间交流 
+- React 组件之间交流<br>
 https://segmentfault.com/a/1190000004044592
 
-- Flex 布局教程：实例篇
+- Flex 布局教程：实例篇<br>
 http://www.ruanyifeng.com/blog/2015/07/flex-examples.html
+
+- Redux<br>
+http://www.imooc.com/video/13216<br>
+http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html<br>

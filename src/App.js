@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import reducers from './reducers'
 
 import $ from 'jquery/dist/jquery.min';
 import jsrsasign from 'jsrsasign';
-// import b64x from './lib/base64x-1.1.min';
 
+import {createStore} from 'redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -36,6 +37,7 @@ import DrawerNav from "./DrawerNav";
 // }
 
 const BASE_URL = "http://localhost:8080/JDoc/";
+const store = createStore(reducers)
 
 class App extends Component {
 
@@ -88,7 +90,7 @@ class App extends Component {
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkiLCJuYW1lIjoiSm9obiBEb2UiLCJleHAiOjE0MjAwNDUyNjEsImFkbWluIjp0cnVlfQ.Uyn5F42wOMwgkzU15h2BVdcBtkmHfHfp_IYr2k3OCIM";
     const jws = jsrsasign.KJUR.jws;
     // 只验证是否能解析
-    var isValid = jws.JWS.verifyJWT(token, "secret", {alg: ['HS256']});
+    let isValid = jws.JWS.verifyJWT(token, "secret", {alg: ['HS256']});
     // 验证 是否能解析、过期时间
     isValid = jws.JWS.verifyJWT(token, "secret", {
       alg: ['HS256'],
@@ -96,8 +98,8 @@ class App extends Component {
     });
     console.log(isValid);
     // 获取数据
-    var headerObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[0]));
-    var payloadObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[1]));
+    let headerObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[0]));
+    let payloadObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[1]));
     console.log(headerObj);
 
     // const oHeader = {alg: "HS256", typ: "JWT"};
@@ -106,20 +108,68 @@ class App extends Component {
     // const sPayload = JSON.stringify(oPayload);
     // const sJWT = jsrsasign.KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "secret");
     // console.log(sJWT);
-
+    //X-Access-Token
     const oHeader = {alg: "HS256", typ: "JWT"};
     const oPayload = {user_id: 1,};
     const sHeader = JSON.stringify(oHeader);
     const sPayload = JSON.stringify(oPayload);
     const sJWT = jsrsasign.KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "jdoc");
-    $.get(
-      BASE_URL + "api/project",
-      {
-        token: sJWT,
+
+    let nextTodoId = 1;
+    const action = function (text) {
+      return {
+        type: "ADD_TODO",
+        id: nextTodoId++,
+        text: text,
+      };
+    };
+    const reducer = function (state, action) {
+      switch (action.type) {
+        case "ADD_TODO":
+          return {
+            id: action.id,
+            text: action.text,
+            completed: false,
+          };
+        case "Toggle_TDDO":
+          if(state.id !== action.id) {
+            return state;
+          }
+          return Object.assign({}, state, {
+            completed: !state.completed,
+          })
+      }
+    };
+
+    $.ajax({
+      type: 'get',
+      url: BASE_URL + "api/project",
+      headers: {"X-Access-Token": sJWT},
+      // success: function (result, status, jqXHR) {
+      //   console.log("success");
+      //   console.log(result);
+      //   console.log(status);
+      //   console.log(jqXHR);
+      // },
+      success: function (result) {
+        console.log(result);
       },
-      function (data, status) {
+      error: function (jqXHR, status, errorThrown) {
+        console.log("error");
+        console.log(jqXHR);
         console.log(status);
-      });
+        console.log(errorThrown);
+      },
+    });
+
+    // $.get(
+    //   BASE_URL + "api/project",
+    //   {
+    //     token: sJWT,
+    //   },
+    //   function (data, status) {
+    //     console.log(status);
+    //   });
 
     return (
       <MuiThemeProvider>

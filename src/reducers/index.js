@@ -3,9 +3,11 @@
  */
 import { combineReducers } from 'redux'
 import testLoginReducer from './testLoginReducer';
+import testAsyncLoginReducer from './testAsyncLoginReducer'
 
 const testReducer = combineReducers ({
-  testLoginReducer,
+  // testLoginReducer,
+  testAsyncLoginReducer,
 });
 
 export default testReducer;

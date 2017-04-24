@@ -1,8 +1,8 @@
 /**
  * Created by xdj on 2017/4/23.
  */
-const testLoginReducer = function (state={openLogin: false}, action) {
-  // console.log(state);
+export const testAsyncShowLoginReducer = function (state = {openLogin: false}, action) {
+  // console.log("async" + state);
   switch (action.type) {
     case "SHOW_LOGIN":
       return {
@@ -19,4 +19,11 @@ const testLoginReducer = function (state={openLogin: false}, action) {
   }
 };
 
-export default testLoginReducer;
+export const testAsyncLoginReducer = function (state = {text: undefined}, action) {
+  return {
+    ...state,
+    text: action.text,
+  }
+};
+
+export default testAsyncLoginReducer;

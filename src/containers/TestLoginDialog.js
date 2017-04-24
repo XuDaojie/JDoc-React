@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import {closeLogin} from "../actions";
+import {closeLogin} from "../actions/testIndex";
 
 // 读取state
 const mapStateToProps = function (state) {

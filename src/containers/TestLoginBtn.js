@@ -4,7 +4,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import RaisedButton from 'material-ui/RaisedButton';
-import {showLogin, closeLogin} from '../actions';
+import {showLogin} from '../actions/testIndex';
 import TestLoginDialog from "./TestLoginDialog";
 
 let ShowLogin = function ({dispatch}) {

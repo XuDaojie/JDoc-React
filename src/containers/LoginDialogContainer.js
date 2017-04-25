@@ -3,19 +3,17 @@
  */
 import * as React from "react";
 import {connect} from "react-redux";
-import PropTypes from 'prop-types'
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import LinearProgress from 'material-ui/LinearProgress';
+import TextField from "material-ui/TextField";
 
-import {closeLogin} from "../actions/testIndex";
+import {closeLogin} from "../actions/index";
 
 // 读取state
 const mapStateToProps = function (state) {
   return {
     // openLogin: state.openLogin,
-    open: state.testLoginReducer.openLogin,
+    open: state.loginDialog.openLogin,
   }
 };
 
@@ -38,7 +36,23 @@ let LoginDialogContainer = function ({open, handleClose}) {
       title="登录"
       modal={false}
       open={open}
-      onRequestClose={handleClose}/>
+      onRequestClose={handleClose}>
+      <TextField
+        floatingLabelText="账号"
+        errorText=""
+        disabled={false}
+        fullWidth={true}/><br/>
+      <TextField
+        floatingLabelText="密码"
+        errorText=""
+        type="password"
+        disabled={false}
+        fullWidth={true}/>
+      <RaisedButton
+        label="登录" primary={true} style={{marginTop: 16}}
+        disabled={false}
+        fullWidth={true}/>
+    </Dialog>
   );
 };
 
@@ -47,44 +61,6 @@ LoginDialogContainer.propTypes = {
   handleClose: React.PropTypes.func,
 };
 
-// TestLoginDialog.propTypes = {
-//   openLogin: React.PropTypes.bool,
-// };
-
-// class TestLoginDialog extends React.Component {
-
-// render() {
-//   return (
-//     <Dialog
-//       title="登录"
-//       modal={false}
-//       open={false}>
-//       <TextField
-//         ref="userInput"
-//         floatingLabelText="账号"
-//         errorText=""
-//         disabled={false}
-//         fullWidth={true}/><br/>
-//       <TextField
-//         ref="pwdInput"
-//         floatingLabelText="密码"
-//         errorText=""
-//         type="password"
-//         disabled={false}
-//         fullWidth={true}/>
-//       <RaisedButton label="登录" primary={true} style={{marginTop: 16}}
-//                     disabled={false}
-//                     fullWidth={true}/>
-//       <LinearProgress
-//         mode="indeterminate" color="#0288D1"
-//         style={this.style.progress}/>
-//     </Dialog>
-//   );
-// };
-
-// }
-
 LoginDialogContainer = connect(mapStateToProps, mapDispatchToProps)(LoginDialogContainer);
-// TestLoginDialog = connect()(TestLoginDialog);
 
 export default LoginDialogContainer;

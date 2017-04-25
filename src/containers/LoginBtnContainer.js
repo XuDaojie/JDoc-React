@@ -4,10 +4,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import RaisedButton from 'material-ui/RaisedButton';
-import {showLogin} from '../actions/testIndex';
-import TestLoginDialog from "./LoginDialogContainer";
+import {showLogin} from '../actions/index';
 
-let ShowLogin = function ({dispatch}) {
+let LoginBtnContainer = function ({dispatch}) {
   return (
     <div>
       <RaisedButton
@@ -32,6 +31,6 @@ const mapDispatchToProps = function (dispatch) {
   return {};
 };
 
-ShowLogin = connect()(ShowLogin);
+LoginBtnContainer = connect()(LoginBtnContainer);
 
-export default ShowLogin;
+export default LoginBtnContainer;

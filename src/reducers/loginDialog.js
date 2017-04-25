@@ -1,7 +1,7 @@
 /**
  * Created by xdj on 2017/4/23.
  */
-const testLoginReducer = function (state={openLogin: false}, action) {
+const loginDialog = function (state={openLogin: false}, action) {
   console.log(state);
   switch (action.type) {
     case "SHOW_LOGIN":
@@ -19,4 +19,4 @@ const testLoginReducer = function (state={openLogin: false}, action) {
   }
 };
 
-export default testLoginReducer;
+export default loginDialog;

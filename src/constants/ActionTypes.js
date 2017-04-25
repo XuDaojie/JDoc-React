@@ -1,0 +1,11 @@
+/**
+ * Created by xdj on 2017/4/24.
+ */
+export const LOGIN_OPEN_CHANGE = 'LOGIN_OPEN_CHANGE';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+// export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
+// export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
+// export const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE';
+// export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from "react-redux";
 // import logo from './logo.svg';
 import './App.css';
 import reducers from './reducers'
@@ -8,17 +9,17 @@ import jsrsasign from 'jsrsasign';
 
 import {createStore} from 'redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import AppBar from 'material-ui/AppBar';
-// import Dialog from 'material-ui/Dialog';
-// import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-// import FlatButton from 'material-ui/FlatButton';
+import MenuItem from 'material-ui/MenuItem';
+import FontIcon from 'material-ui/FontIcon';
+import {Toolbar, ToolbarGroup,  ToolbarTitle} from 'material-ui/Toolbar';
+import Paper from 'material-ui/Paper';
 
-import LoginDialog from "./LoginDialog";
+import LoginDialogContainer from "./containers/LoginDialogContainer";
 import ProjectContent from "./ProjectContent";
 import DrawerNav from "./DrawerNav";
+import AppBar from './containers/AppBarContainer';
 
 // class App extends Component {
 //   render() {
@@ -37,7 +38,7 @@ import DrawerNav from "./DrawerNav";
 // }
 
 const BASE_URL = "http://localhost:8080/JDoc/";
-const store = createStore(reducers)
+const store = createStore(reducers);
 
 class App extends Component {
 
@@ -81,8 +82,8 @@ class App extends Component {
   }
 
   openDialog() {
-    this.setState({openLogin: true});
-    this.drawerClose();
+    // this.setState({openLogin: true});
+    // this.drawerClose();
   }
 
   render() {
@@ -96,11 +97,11 @@ class App extends Component {
       alg: ['HS256'],
       verifyAt: jws.IntDate.get('20160601000000Z')
     });
-    console.log(isValid);
+    // console.log(isValid);
     // 获取数据
     let headerObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[0]));
     let payloadObj = jws.JWS.readSafeJSONString(jsrsasign.b64utoutf8(token.split(".")[1]));
-    console.log(headerObj);
+    // console.log(headerObj);
 
     // const oHeader = {alg: "HS256", typ: "JWT"};
     // const oPayload = {sub: "123456789", name: "John Doe", exp: 1420045261, admin: true};
@@ -132,7 +133,7 @@ class App extends Component {
             completed: false,
           };
         case "Toggle_TDDO":
-          if(state.id !== action.id) {
+          if (state.id !== action.id) {
             return state;
           }
           return Object.assign({}, state, {
@@ -152,54 +153,62 @@ class App extends Component {
       //   console.log(jqXHR);
       // },
       success: function (result) {
-        console.log(result);
+        // console.log(result);
       },
       error: function (jqXHR, status, errorThrown) {
-        console.log("error");
-        console.log(jqXHR);
-        console.log(status);
-        console.log(errorThrown);
+        // console.log("error");
+        // console.log(jqXHR);
+        // console.log(status);
+        // console.log(errorThrown);
       },
     });
-
-    // $.get(
-    //   BASE_URL + "api/project",
-    //   {
-    //     token: sJWT,
-    //   },
-    //   function (data, status) {
-    //     console.log(status);
-    //   });
 
     return (
       <MuiThemeProvider>
         <div>
-          <AppBar
-            title=""
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-            onLeftIconButtonTouchTap={this.leftIconClick.bind(this)}
-            onTitleTouchTap={this.openDialog.bind(this)}>
-            <DrawerNav
-              open={this.state.openDrawer}
-              docked={false}
-              data={this.state.drawerData}
-              onRequestChange={(openDrawer) => {
-                this.setState({openDrawer})
-              }}
-              onNestedListToggle={key => {
-                this.setState({markdownId: key});
-              }}
-            />
-            <LoginDialog
-              open={this.state.openLogin}
-              onRequestClose={this.handleDialogClose.bind(this)}
-              onLoginSuccess={this.handleLoginSuccess.bind(this)}/>
-          </AppBar>
+          <DrawerNav
+            open={this.state.openDrawer}
+            docked={false}
+            data={this.state.drawerData}
+            onRequestChange={(openDrawer) => {
+              this.setState({openDrawer})
+            }}
+            onNestedListToggle={key => {
+              this.setState({markdownId: key});
+            }}
+          />
+          <LoginDialogContainer/>
+          {/*<LoginDialog*/}
+            {/*open={this.state.openLogin}*/}
+            {/*onRequestClose={this.handleDialogClose.bind(this)}*/}
+            {/*onRequestSuccess={this.handleLoginSuccess.bind(this)}/>*/}
+          <AppBar/>
+          {/*<Paper zDepth={1}>*/}
+            {/*<Toolbar*/}
+              {/*title=""*/}
+              {/*style={{backgroundColor: '#00bcd4'}}>*/}
+
+              {/*<ToolbarGroup firstChild={true} >*/}
+                {/*<IconButton onTouchTap={this.leftIconClick.bind(this)}>*/}
+                  {/*<FontIcon className="material-icons" color="white">menu</FontIcon>*/}
+                {/*</IconButton>*/}
+                {/*<ToolbarTitle text="Toolbar" style={{color: 'white'}}/>*/}
+              {/*</ToolbarGroup>*/}
+              {/*<ToolbarGroup lastChild={true} >*/}
+                {/*<MenuItem*/}
+                  {/*primaryText="登陆"*/}
+                  {/*style={{color: 'white'}}*/}
+                  {/*onTouchTap={this.openDialog.bind(this)}/>*/}
+              {/*</ToolbarGroup>*/}
+
+            {/*</Toolbar>*/}
+          {/*</Paper>*/}
           <ProjectContent markdownId={this.state.markdownId}/>
         </div>
       </MuiThemeProvider>
     );
   }
 }
+App = connect()(App);
 
 export default App;

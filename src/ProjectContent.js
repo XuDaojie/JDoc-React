@@ -59,7 +59,6 @@ class ProjectContent extends React.Component {
   }
 
   loadMarkdown(){
-    console.log("loadMarkdown" + this.state.markdownId);
     if(this.state.markdownId !== null){
       $.get(
         BASE_URL + "markdown.do",

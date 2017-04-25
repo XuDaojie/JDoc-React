@@ -15,3 +15,7 @@ export const closeLogin = function () {
     type: CLOSE_LOGIN,
   }
 };
+
+export const loginSuccess = function () {
+  return closeLogin();
+};

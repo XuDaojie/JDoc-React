@@ -7,7 +7,7 @@ import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from "material-ui/TextField";
 
-import {closeLogin} from "../actions/index";
+import {closeLogin, loginSuccess} from "../actions";
 
 // 读取state
 const mapStateToProps = function (state) {
@@ -21,13 +21,16 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch, ownProps) {
   // login中已经进行过绑定，直接将dispatch传递过来
   return {
-    handleClose: function () {
+    onLoginClose: function () {
       dispatch(closeLogin());
     },
+    onLoginSuccess: function () {
+      dispatch(loginSuccess());
+    }
   };
 };
 // 参数是propTypes
-let LoginDialogContainer = function ({open, handleClose}) {
+let LoginDialogContainer = function ({open, onLoginClose, onLoginSuccess}) {
   // 映射的数据
   console.log({open});
   // open={open}
@@ -36,7 +39,7 @@ let LoginDialogContainer = function ({open, handleClose}) {
       title="登录"
       modal={false}
       open={open}
-      onRequestClose={handleClose}>
+      onRequestClose={onLoginClose}>
       <TextField
         floatingLabelText="账号"
         errorText=""
@@ -51,14 +54,16 @@ let LoginDialogContainer = function ({open, handleClose}) {
       <RaisedButton
         label="登录" primary={true} style={{marginTop: 16}}
         disabled={false}
-        fullWidth={true}/>
+        fullWidth={true}
+        onTouchTap={onLoginSuccess}/>
     </Dialog>
   );
 };
 
 LoginDialogContainer.propTypes = {
   open: React.PropTypes.bool,
-  handleClose: React.PropTypes.func,
+  onLoginClose: React.PropTypes.func,
+  onLoginSuccess: React.PropTypes.func,
 };
 
 LoginDialogContainer = connect(mapStateToProps, mapDispatchToProps)(LoginDialogContainer);

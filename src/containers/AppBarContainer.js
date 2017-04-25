@@ -8,7 +8,7 @@ import FontIcon from 'material-ui/FontIcon';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
-import * as AppBarAction from '../actions/AppBarAction';
+import * as action from '../actions';
 
 let AppBar = function ({dispatch}) {
   return (
@@ -30,7 +30,7 @@ let AppBar = function ({dispatch}) {
             primaryText="登陆"
             style={{color: 'white'}}
             onTouchTap={function () {
-              dispatch(AppBarAction.loginOpenChange(true));
+              dispatch(action.loginOpenChange(true));
             }}/>
         </ToolbarGroup>
       </Toolbar>

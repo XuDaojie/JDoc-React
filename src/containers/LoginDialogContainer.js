@@ -24,10 +24,11 @@ const style = {
 };
 
 let LoginDialogContainer = function ({open, onRequestClose}) {
-  return <Dialog
-    title="登录"
-    open={open}
-    onRequestClose={onRequestClose}/>
+  return (
+    <Dialog
+      title="登录"
+      open={false}/>
+  );
 };
 
 LoginDialogContainer.propTypes = {
@@ -40,7 +41,7 @@ LoginDialogContainer.propTypes = {
 const mapStateToProps = function (state) {
   return {
     // openLogin: state.openLogin,
-    open: state.appBar.openLogin,
+    // open: state.appBar.openLogin,
   }
 };
 

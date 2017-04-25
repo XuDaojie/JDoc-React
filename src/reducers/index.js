@@ -4,8 +4,8 @@
 import { combineReducers } from 'redux'
 import loginDialog from './loginDialog';
 
-const testReducer = combineReducers ({
+const reducerIndex = combineReducers ({
   loginDialog,
 });
 
-export default testReducer;
+export default reducerIndex;

@@ -7,8 +7,10 @@ import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from "material-ui/TextField";
 
-import {closeLogin, loginSuccess} from "../actions";
+import {closeLogin, login} from "../actions";
 
+let userInput;
+let pwdInput;
 // 读取state
 const mapStateToProps = function (state) {
   return {
@@ -25,7 +27,9 @@ const mapDispatchToProps = function (dispatch, ownProps) {
       dispatch(closeLogin());
     },
     onLoginSuccess: function () {
-      dispatch(loginSuccess());
+      const userVal = userInput.input.value;
+      const pwdVal = pwdInput.input.value;
+      dispatch(login(userVal, pwdVal));
     }
   };
 };
@@ -41,11 +45,17 @@ let LoginDialogContainer = function ({open, onLoginClose, onLoginSuccess}) {
       open={open}
       onRequestClose={onLoginClose}>
       <TextField
+        ref={function (input) {
+          userInput = input;
+        }}
         floatingLabelText="账号"
         errorText=""
         disabled={false}
         fullWidth={true}/><br/>
       <TextField
+        ref={function (input) {
+          pwdInput = input;
+        }}
         floatingLabelText="密码"
         errorText=""
         type="password"

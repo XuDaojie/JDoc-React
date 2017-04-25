@@ -10,16 +10,6 @@ import LinearProgress from 'material-ui/LinearProgress';
 
 import * as action from '../actions';
 
-const BASE_URL = "http://localhost:8080/JDoc/";
-
-const style = {
-  progressNone: {
-    backgroundColor: '#00bcd4', display: 'none'
-  },
-  progress: {
-    backgroundColor: '#00bcd4', display: 'block'
-  }
-};
 let userInput, pwdInput;
 
 let LoginDialogContainer = function ({

@@ -63,3 +63,10 @@ http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html
 
 - RESTful
 http://mccxj.github.io/blog/20130530_introduce-to-rest.html<br>
+
+- OPTION 请求<br>
+发送了一个请求但是在网络里发现请求了两次
+http://www.cnblogs.com/virtual/p/3720750.html<br>
+
+-  Java Web应用中支持跨域请求<br>
+http://blog.csdn.net/lmy86263/article/details/51724221<br>

@@ -12,9 +12,12 @@ const style = {
     // justifyContent: "space-between",
     justifyContent: "center",
 
-    marginTop: 16,
+    // marginTop: 16,
     marginLeft: 8,
     marginRight: 8,
+    paddingTop: 56,
+    marginBottom: 56
+
   },
   markdown: {
   },

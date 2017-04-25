@@ -9,13 +9,21 @@ import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import * as action from '../actions';
-
+{/*<Paper zDepth={1}>*/
+}
+{/*</Paper>*/
+}
 let AppBar = function ({dispatch}) {
   return (
-    <Paper zDepth={1}>
+
+    <div style={{
+      position: 'fixed',
+      width: '100%',
+      zIndex: 1,
+    }}>
       <Toolbar
         title=""
-        style={{backgroundColor: '#00bcd4'}}>
+        style={{backgroundColor: '#00bcd4',}}>
 
         <ToolbarGroup firstChild={true}>
           <IconButton onTouchTap={function () {
@@ -34,7 +42,7 @@ let AppBar = function ({dispatch}) {
             }}/>
         </ToolbarGroup>
       </Toolbar>
-    </Paper>
+    </div>
   );
 };
 

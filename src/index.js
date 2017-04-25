@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-// import TestApp from "./components/TestApp";
-// import TestApp from "./components/TestAsyncApp";
-
 import './index.css';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'

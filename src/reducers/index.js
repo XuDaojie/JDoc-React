@@ -2,10 +2,10 @@
  * Created by xdj on 2017/4/23.
  */
 import { combineReducers } from 'redux'
-import appBar from "./appBar";
+import loginDialog from "./loginDialog";
 
-const testReducer = combineReducers ({
-  appBar,
+const reducerIndex = combineReducers ({
+  loginDialog,
 });
 
-export default testReducer;
+export default reducerIndex;

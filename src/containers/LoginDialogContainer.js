@@ -3,13 +3,11 @@
  */
 import React from 'react';
 import {connect} from "react-redux";
-import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import $ from 'jquery/dist/jquery.min';
 import * as action from '../actions';
 
 const BASE_URL = "http://localhost:8080/JDoc/";
@@ -22,26 +20,75 @@ const style = {
     backgroundColor: '#00bcd4', display: 'block'
   }
 };
+let userInput, pwdInput;
 
-let LoginDialogContainer = function ({open, onRequestClose}) {
+let LoginDialogContainer = function ({
+                                       open, modal, disable, userErrorMsg, pwdErrorMsg, btnText,
+                                       progressStyle,
+                                       onDialogClose, onInputChange, onBtnClick,
+                                     }) {
   return (
     <Dialog
       title="登录"
-      open={false}/>
+      open={open}
+      modal={modal}
+      onRequestClose={onDialogClose}>
+      <TextField
+        ref={function (input) {
+          userInput = input;
+        }}
+        floatingLabelText="账号"
+        errorText={userErrorMsg}
+        disabled={disable}
+        fullWidth={true}
+        onChange={onInputChange}/><br/>
+      <TextField
+        ref={function (input) {
+          pwdInput = input;
+        }}
+        floatingLabelText="密码"
+        // value={this.state.password}
+        errorText={pwdErrorMsg}
+        type="password"
+        disabled={disable}
+        fullWidth={true}
+        onChange={onInputChange}/>
+      <RaisedButton
+        label={btnText} primary={true} style={{marginTop: 16}}
+        disabled={disable}
+        fullWidth={true}
+        onTouchTap={onBtnClick}/>
+      <LinearProgress
+        mode="indeterminate" color="#0288D1"
+        style={progressStyle}/>
+      <div style={{textAlign: 'center', fontSize: 14, marginTop: 16}}>注册账号</div>
+    </Dialog>
   );
 };
 
 LoginDialogContainer.propTypes = {
   open: React.PropTypes.bool,
-  onRequestClose: React.PropTypes.func,
-  onRequestSuccess: React.PropTypes.func,
+  modal: React.PropTypes.bool,
+  disable: React.PropTypes.bool,
+  userErrorMsg: React.PropTypes.string,
+  pwdErrorMsg: React.PropTypes.string,
+  btnText: React.PropTypes.string,
+  progressStyle: React.PropTypes.object,
+  onBtnClick: React.PropTypes.func,
+  onDialogClose: React.PropTypes.func,
+  onInputChange: React.PropTypes.func,
 };
 
 // 读取state
 const mapStateToProps = function (state) {
   return {
-    // openLogin: state.openLogin,
-    // open: state.appBar.openLogin,
+    open: state.loginDialog.open,
+    modal: state.loginDialog.modal,
+    disable: state.loginDialog.disable,
+    userErrorMsg: state.loginDialog.userErrorMsg,
+    pwdErrorMsg: state.loginDialog.pwdErrorMsg,
+    btnText: state.loginDialog.btnText,
+    progressStyle: state.loginDialog.progressStyle,
   }
 };
 
@@ -49,9 +96,17 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch, ownProps) {
   // login中已经进行过绑定，直接将dispatch传递过来
   return {
-    // onRequestClose: function () {
-    //   dispatch(action.loginOpenChange(false));
-    // },
+    onBtnClick: function () {
+      const username = userInput.input.value;
+      const password = pwdInput.input.value;
+      dispatch(action.login(username, password));
+    },
+    onDialogClose: function () {
+      dispatch(action.loginOpenChange(false));
+    },
+    onInputChange: function (e, newVal) {
+      dispatch(action.inputChange());
+    }
   };
 };
 

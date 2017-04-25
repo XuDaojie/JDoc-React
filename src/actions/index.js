@@ -39,10 +39,10 @@ export const loginError = function (result) {
 };
 
 export const login = function (username, password) {
-  return function (dispatch, getState) {
+  return (dispatch, getState) =>{
     dispatch({type: LOGIN_REQUEST});
     $.ajax({
-      url: "https://api.github.com/users/${username}",
+      url: `https://api.github.com/users/${username}`,
       success: function (result) {
         dispatch({type: LOGIN_SUCCESS, payload: loginSuccess(result)});
       },

@@ -60,3 +60,12 @@ http://www.ruanyifeng.com/blog/2015/07/flex-examples.html
 - Redux<br>
 http://www.imooc.com/video/13216<br>
 http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html<br>
+
+- ES6
+字符串模板
+```javascript
+const username = "XuDaojie";
+const url = `https://api.github.com/users/${username}`;
+// url = `https://api.github.com/users/XuDaojie`
+// 注意 这不是单引号，是tab上面的波浪符键
+```

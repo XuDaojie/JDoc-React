@@ -29,7 +29,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
   };
 };
 // 参数是propTypes
-let TestLoginDialog = function ({open, handleClose}) {
+let LoginDialogContainer = function ({open, handleClose}) {
   // 映射的数据
   console.log({open});
   // open={open}
@@ -42,7 +42,7 @@ let TestLoginDialog = function ({open, handleClose}) {
   );
 };
 
-TestLoginDialog.propTypes = {
+LoginDialogContainer.propTypes = {
   open: React.PropTypes.bool,
   handleClose: React.PropTypes.func,
 };
@@ -84,7 +84,7 @@ TestLoginDialog.propTypes = {
 
 // }
 
-TestLoginDialog = connect(mapStateToProps, mapDispatchToProps)(TestLoginDialog);
+LoginDialogContainer = connect(mapStateToProps, mapDispatchToProps)(LoginDialogContainer);
 // TestLoginDialog = connect()(TestLoginDialog);
 
-export default TestLoginDialog;
+export default LoginDialogContainer;

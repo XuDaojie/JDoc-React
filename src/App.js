@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
-import TestLoginDialog from "./containers/TestLoginDialog";
+import LoginDialogContainer from "./containers/LoginDialogContainer";
 import TestLoginBtn from "./containers/TestLoginBtn";
 
 class App extends Component {
@@ -19,7 +19,7 @@ class App extends Component {
           <AppBar title="Hello Redux">
           </AppBar>
           <TestLoginBtn/>
-          <TestLoginDialog/>
+          <LoginDialogContainer/>
         </div>
       </MuiThemeProvider>
     );

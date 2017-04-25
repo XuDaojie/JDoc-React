@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import App from './App';
-import TestApp from "./components/TestApp";
-
+import App from './App';
 import './index.css';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -13,7 +11,7 @@ const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window
 
 ReactDOM.render(
   <Provider store={store}>
-    <TestApp/>
+    <App/>
   </Provider>,
   document.getElementById('root')
 );

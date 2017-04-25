@@ -31,6 +31,7 @@ const loginDialog = function (state = {btnText: "登录", progressStyle: style.p
         ...state,
         open: action.payload.openLogin,
         disable: false,
+        modal: false,
         progressStyle: style.progressNone,
         userErrorMsg: undefined,
         pwdErrorMsg: undefined,

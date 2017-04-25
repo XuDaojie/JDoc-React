@@ -26,7 +26,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
     onLoginClose: function () {
       dispatch(closeLogin());
     },
-    onLoginSuccess: function () {
+    onLoginClick: function () {
       const userVal = userInput.input.value;
       const pwdVal = pwdInput.input.value;
       dispatch(login(userVal, pwdVal));
@@ -34,7 +34,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
   };
 };
 // 参数是propTypes
-let LoginDialogContainer = function ({open, onLoginClose, onLoginSuccess}) {
+let LoginDialogContainer = function ({open, onLoginClose, onLoginClick}) {
   // 映射的数据
   console.log({open});
   // open={open}
@@ -65,7 +65,7 @@ let LoginDialogContainer = function ({open, onLoginClose, onLoginSuccess}) {
         label="登录" primary={true} style={{marginTop: 16}}
         disabled={false}
         fullWidth={true}
-        onTouchTap={onLoginSuccess}/>
+        onTouchTap={onLoginClick}/>
     </Dialog>
   );
 };
@@ -73,7 +73,7 @@ let LoginDialogContainer = function ({open, onLoginClose, onLoginSuccess}) {
 LoginDialogContainer.propTypes = {
   open: React.PropTypes.bool,
   onLoginClose: React.PropTypes.func,
-  onLoginSuccess: React.PropTypes.func,
+  onLoginClick: React.PropTypes.func,
 };
 
 LoginDialogContainer = connect(mapStateToProps, mapDispatchToProps)(LoginDialogContainer);

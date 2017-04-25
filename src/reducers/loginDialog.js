@@ -13,15 +13,17 @@ const loginDialog = function (state = {openLogin: false}, action) {
         ...state,
         openLogin: !state.openLogin,
       };
-    case "LOGIN":
-      if (!action.payload.username || !action.payload.password
-        || action.payload.username.length === 0
-        || action.payload.password.length === 0) {
-        return state;
-      }
+    case "LOGIN_SUCCESS":
+      console.log(action.payload);
       return {
         ...state,
         openLogin: !state.openLogin,
+      };
+    case "LOGIN_ERROR":
+      console.log(action.payload);
+      return {
+        ...state,
+        openLogin: state.openLogin,
       };
     default:
       return state;

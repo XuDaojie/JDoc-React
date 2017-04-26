@@ -29,6 +29,7 @@ const main = function (state = {sHtml: "<div>Main</div>"}, action) {
     case MAIN_LOAD_HTML_RECEIVE:
       if(payload.code === 0) {
         return {
+          ...state,
           markdown: action.payload,
           sHtml: marked(payload.data.content),
         };

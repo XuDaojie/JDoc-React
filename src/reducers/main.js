@@ -13,15 +13,18 @@ const main = function (state = {readMdId: 1, msgOpen: false,}, action) {
   switch (action.type) {
     case NOT_LOGIN:
       return {
+        ...state,
         msg: "账号未登陆",
       };
     case MAIN_MSG_OPEN:
       return {
+        ...state,
         msgOpen: true,
         msg: payload.msg,
       };
     case MAIN_MSG_CLOSE:
       return {
+        ...state,
         msgOpen: false,
         msg: undefined,
       };

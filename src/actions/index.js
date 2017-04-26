@@ -7,12 +7,36 @@ import {
   LOGIN_USER_IS_NULL, LOGIN_PWD_IS_NULL,
   MAIN_LOAD_HTML_REQUEST, MAIN_LOAD_HTML_RECEIVE, MAIN_LOAD_HTML_ERROR,
   ADD_MD_OPEN_CHANGE, ADD_MD_INPUT_CHANGE, ADD_MD_NAME_IS_NULL, ADD_MD_PROJECT_IS_NULL,
-  ADD_MD_REQUEST, ADD_MD_RECEIVE, ADD_MD_ERROR, NOT_LOGIN
+  ADD_MD_REQUEST, ADD_MD_RECEIVE, ADD_MD_ERROR, NOT_LOGIN,
+  NAV_OPEN_CHANGE, NAV_LOAD, NAV_LOAD_REQUEST, NAV_LOAD_RECEIVE, NAV_LOAD_ERROR,
+  COOMON_FETCH_ERROR
 } from '../constants/ActionTypes';
 import $ from 'jquery';
 import * as tokenUtil from '../utils/tokenUtil';
 import * as Api from "../constants/Api";
 
+// ----common
+const isLogin = function (dispatch, getState) {
+  if(!getState().loginDialog.account) {
+    dispatch({type: NOT_LOGIN});
+    return false;
+  }
+  return true;
+};
+const fetchReceive = function (result, successType) {
+  if (result.code === 0) {
+    return {type: successType, payload: result};
+  }
+  return fetchWarn(result);
+};
+// 接口请求成功但code为失败
+const fetchWarn = function (result) {
+  return {type: COOMON_FETCH_ERROR, payload: {msg: result.msg}}
+};
+// 比如404
+const fetchError = function (msg) {
+  return {type: COOMON_FETCH_ERROR, payload: {msg}}
+};
 
 // ---login-
 export const loginOpenChange = function (open) {
@@ -47,7 +71,13 @@ export const login = function (username, password) {
       url: Api.ACCOUNT,
       headers: {"Authorization": `Basic ${auth}`},
       success: function (result, jqXHR) {
-        dispatch(loginReceive(result));
+        if (result.code === 0) {
+          // dispatch(fetchReceive(result, LOGIN_RECEIVE));
+          dispatch(loginReceive(result))
+          dispatch(navLoad())
+        } else {
+          dispatch(fetchWarn(result))
+        }
       },
       error: function (jqXHR, status, errorThrown) {
         dispatch(loginError());
@@ -191,4 +221,51 @@ export const addMD = function (mdName, mdDes, proName) {
       },
     });
   }
+
 };
+
+// --- drawer ---
+
+export const leftIconOnClick = function() {
+  return function (dispatch, getState) {
+    dispatch(navOpenChange(true));
+  }
+};
+export const navOpenChange = function(open) {
+  return {type: NAV_OPEN_CHANGE, payload: {open}};
+};
+
+const navLoadReceive = function (result) {
+  return {
+    type: NAV_LOAD_RECEIVE,
+    payload: result,
+  };
+};
+
+const navLoadError = function () {
+  return {
+    type: NAV_LOAD_ERROR,
+  };
+};
+
+export const navLoad = function() {
+  return function (dispatch, getState) {
+    if (isLogin(dispatch, getState)) {
+      dispatch({type: NAV_LOAD_REQUEST})
+      const account = getState().loginDialog.account;
+      const user_id = account.id;
+      $.ajax({
+        url: Api.BASE_URL + `user/${user_id}/project`,
+        headers: {"X-Access-Token": getState().loginDialog.token},
+        success: function (result, jqXHR) {
+          // dispatch(navLoadReceive(result));
+          dispatch(fetchReceive(result, NAV_LOAD_RECEIVE));
+        },
+        error: function (jqXHR, status, errorThrown) {
+          dispatch(fetchError(status));
+        },
+      })
+    }
+  }
+};
+

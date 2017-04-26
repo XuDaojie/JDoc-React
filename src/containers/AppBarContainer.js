@@ -27,7 +27,7 @@ let AppBar = function ({dispatch}) {
 
         <ToolbarGroup firstChild={true}>
           <IconButton onTouchTap={function () {
-
+            dispatch(action.navOpenChange(true));
           }}>
             <FontIcon className="material-icons" color="white">menu</FontIcon>
           </IconButton>

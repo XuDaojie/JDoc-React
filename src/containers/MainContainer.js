@@ -13,6 +13,10 @@ import AddMdDialogContainer from "./AddMdDialogContainer";
 import {Snackbar} from "material-ui";
 
 let MainContainer = function ({msgOpen, msg, ftbOnClick, msgOnClose}) {
+  const componentDidMount = function () {
+    console.log("xs");
+  };
+
   return (
     <div>
       <Snackbar
@@ -31,6 +35,7 @@ let MainContainer = function ({msgOpen, msg, ftbOnClick, msgOnClose}) {
         onTouchTap={ftbOnClick}>
         <ContentCreate />
       </FloatingActionButton>
+      {/*<iframe src="http://localhost:8080/JDoc/index.jsp"/>*/}
     </div>
   );
 };
@@ -57,7 +62,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
   // dispatch(action.mainLoadHtml(5));
   return {
     ftbOnClick: function () {
-      dispatch(action.addMdOpenChange(true));
+      dispatch(action.editMdOnClick(true));
     },
     msgOnClose: function () {
       dispatch(action.mainMsgClose());

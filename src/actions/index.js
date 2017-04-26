@@ -42,11 +42,10 @@ export const login = function (username, password) {
   }
   return function (dispatch, getState) {
     dispatch({type: LOGIN_REQUEST});
-
-    const sJWT = tokenUtil.create({username, password});
+    const auth = btoa(`${username}:${password}`);
     $.ajax({
       url: Api.ACCOUNT,
-      headers: {"X-Access-Token": sJWT},
+      headers: {"Authorization": `Basic ${auth}`},
       success: function (result, jqXHR) {
         dispatch(loginReceive(result));
       },
@@ -89,8 +88,10 @@ const mainLoadHtmlError = function () {
   };
 };
 
-export const mainLoadHtml = function (markdownId) {
+export const mainLoadHtml = function () {
   return function (dispatch, getState) {
+    const markdownId = getState().main.readMdId;
+
     dispatch({type: MAIN_LOAD_HTML_REQUEST});
     $.ajax({
       url: Api.BASE_URL + `markdown/${markdownId}`,
@@ -105,6 +106,23 @@ export const mainLoadHtml = function (markdownId) {
   };
 
   // return {type: MAIN_LOAD_HTML, payload: {markdown_id}}
+};
+
+export const editMdOnClick = function () {
+  return function (dispatch, getState) {
+    const readMdId = getState().main.readMdId;
+    const account = getState().loginDialog.account;
+    if (!account) {
+      dispatch({type: NOT_LOGIN});
+      return;
+    } {
+      const token = getState().loginDialog.token;
+      const userId = account.id;
+      // window.open(Api.BASE_URL + `editormd.form?id=${readMdId}`);
+      window.open(Api.BASE_URL + `static/editormd.html?it=${token}&user_id=${userId}&markdown_id=${readMdId}&`);
+    }
+
+  }
 };
 
 //----AddMarkdownDialog

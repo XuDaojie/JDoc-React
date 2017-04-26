@@ -70,3 +70,12 @@ http://www.cnblogs.com/virtual/p/3720750.html<br>
 
 -  Java Web应用中支持跨域请求<br>
 http://blog.csdn.net/lmy86263/article/details/51724221<br>
+
+- 无法访问静态资源
+http://blog.csdn.net/zb0567/article/details/7976286<br>
+http://bbs.csdn.net/topics/390978390?page=1<br>
+
+- SpringMVC处理put、delete请求
+需要使用post来模拟<br>
+https://segmentfault.com/a/1190000000580058<br>
+

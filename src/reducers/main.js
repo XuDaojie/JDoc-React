@@ -7,16 +7,14 @@ import {
   NOT_LOGIN
 } from '../constants/ActionTypes';
 
-const main = function (state = {msgOpen: false}, action) {
+const main = function (state = {readMdId: 1, msgOpen: false,}, action) {
   const payload = action.payload;
 
   switch (action.type) {
     case NOT_LOGIN:
-      if(payload.code === 0) {
-        return {
-          msg: "账号未登陆",
-        };
-      }
+      return {
+        msg: "账号未登陆",
+      };
     case MAIN_MSG_OPEN:
       return {
         msgOpen: true,

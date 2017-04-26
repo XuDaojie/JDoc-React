@@ -53,7 +53,8 @@ const loginDialog = function (state = {open: false, btnText: "登录", progressS
           ...state,
           open: false,
           progressStyle: style.progressNone,
-          account: action.payload.data,
+          account: payload.data,
+          token: payload.data.token,
         };
       }
       return {

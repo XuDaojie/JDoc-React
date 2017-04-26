@@ -16,7 +16,7 @@ const style = {
     // marginTop: 16,
     marginLeft: 8,
     marginRight: 8,
-    // paddingTop: 56,
+    paddingTop: 56,
     marginBottom: 56
   },
   markdownBody: {
@@ -54,7 +54,7 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch, ownProps) {
   // login中已经进行过绑定，直接将dispatch传递过来
   // todo 默认markdown——id
-  dispatch(action.mainLoadHtml(5));
+  dispatch(action.mainLoadHtml());
   return {};
 };
 

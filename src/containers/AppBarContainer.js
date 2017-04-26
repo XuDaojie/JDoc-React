@@ -40,49 +40,17 @@ let AppBar = function ({dispatch}) {
             onTouchTap={function () {
               dispatch(action.loginOpenChange(true));
             }}/>
+          <MenuItem
+            primaryText="新建"
+            style={{color: 'white'}}
+            onTouchTap={function () {
+              dispatch(action.addMdOpenChange(true));
+            }}/>
         </ToolbarGroup>
       </Toolbar>
     </div>
   );
 };
 
-// class AppBar extends React.Component {
-//
-//   constructor(props) {
-//     super(props);
-//   }
-//
-//   leftIconClick() {
-//   }
-//
-//   rightIconClick({dispatch}) {
-//     dispatch(AppBarAction.loginOpenChange(true));
-//   }
-//
-//   render() {
-//     console.log(new TestLoginDialog());
-//     return (
-//       <Paper zDepth={1}>
-//         <Toolbar
-//           title=""
-//           style={{backgroundColor: '#00bcd4'}}>
-//
-//           <ToolbarGroup firstChild={true}>
-//             <IconButton onTouchTap={this.leftIconClick.bind(this)}>
-//               <FontIcon className="material-icons" color="white">menu</FontIcon>
-//             </IconButton>
-//             <ToolbarTitle text="Toolbar" style={{color: 'white'}}/>
-//           </ToolbarGroup>
-//           <ToolbarGroup lastChild={true}>
-//             <MenuItem
-//               primaryText="登陆"
-//               style={{color: 'white'}}
-//               onTouchTap={this.rightIconClick.bind(this)}/>
-//           </ToolbarGroup>
-//         </Toolbar>
-//       </Paper>
-//     );
-//   }
-// }
 AppBar = connect()(AppBar);
 export default AppBar;

@@ -8,7 +8,7 @@ import * as action from '../actions';
 import '../css/md.preview.css';
 import MdContainer from "./MdContainer";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentAdd from "material-ui/svg-icons/content/add";
+import ContentCreate from "material-ui/svg-icons/content/create";
 import AddMdDialogContainer from "./AddMdDialogContainer";
 import {Snackbar} from "material-ui";
 
@@ -29,7 +29,7 @@ let MainContainer = function ({msgOpen, msg, ftbOnClick, msgOnClose}) {
         style={{marginRight: 16, position: 'fixed', right: 64, bottom: 64}}
         zDepth={4}
         onTouchTap={ftbOnClick}>
-        <ContentAdd />
+        <ContentCreate />
       </FloatingActionButton>
     </div>
   );

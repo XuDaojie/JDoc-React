@@ -1,41 +1,31 @@
 /**
- * Created by xdj on 2017/4/25.
+ * Created by xdj on 2017/4/26.
  */
 import {
-  MAIN_LOAD_HTML, MAIN_LOAD_HTML_RECEIVE
+  MAIN_MSG_CLOSE,
+  MAIN_MSG_OPEN,
+  NOT_LOGIN
 } from '../constants/ActionTypes';
-import marked from 'marked';
 
-/*
- {
- open, disable, userErrorMsg, pwdErrorMsg, btnText,
- progressStyle,
- onDialogClose, onInputChange
- }
- */
-const style = {
-  progressNone: {
-    backgroundColor: '#00bcd4', display: 'none'
-  },
-  progress: {
-    backgroundColor: '#00bcd4', display: 'block'
-  }
-};
-
-const main = function (state = {sHtml: "<div>Main</div>"}, action) {
+const main = function (state = {msgOpen: false}, action) {
   const payload = action.payload;
 
   switch (action.type) {
-    case MAIN_LOAD_HTML_RECEIVE:
+    case NOT_LOGIN:
       if(payload.code === 0) {
         return {
-          markdown: action.payload,
-          sHtml: marked(payload.data.content),
+          msg: "账号未登陆",
         };
       }
+    case MAIN_MSG_OPEN:
       return {
-        ...state,
-        sHtml: marked(payload.data.content),
+        msgOpen: true,
+        msg: payload.msg,
+      };
+    case MAIN_MSG_CLOSE:
+      return {
+        msgOpen: false,
+        msg: undefined,
       };
     default:
       return state;

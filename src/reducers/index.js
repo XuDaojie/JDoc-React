@@ -3,11 +3,15 @@
  */
 import { combineReducers } from 'redux'
 import loginDialog from "./loginDialog";
+import md from "./md";
+import addMdDialog from "./addMdDialog";
 import main from "./main";
 
 const reducerIndex = combineReducers ({
-  loginDialog,
   main,
+  loginDialog,
+  md,
+  addMdDialog,
 });
 
 export default reducerIndex;

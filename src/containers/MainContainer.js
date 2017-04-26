@@ -2,9 +2,10 @@
  * Created by xdj on 2017/4/25.
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {connect} from "react-redux";
 import * as action from '../actions';
+// import 'github-markdown-css';
+import '../css/md.preview.css';
 
 const style = {
   root: {
@@ -15,18 +16,25 @@ const style = {
     // marginTop: 16,
     marginLeft: 8,
     marginRight: 8,
-    paddingTop: 56,
+    // paddingTop: 56,
     marginBottom: 56
+  },
+  markdownBody: {
+    boxSizing: "border-box",
+    minWidth: "200",
+    maxWidth: "980",
+    margin: "auto",
+    padding: 45
+  }
 
-  },
-  markdown: {
-  },
 };
 
 let MainContainer = function ({sHtml}) {
   return (
-    <div style={style.root}>
-      <div dangerouslySetInnerHTML={{__html: sHtml}} />
+    <div id="editormd" style={style.root}>
+      <article className="markdown-body" style={style.markdownBody}>
+        <div dangerouslySetInnerHTML={{__html: sHtml}}/>
+      </article>
     </div>
   );
 };

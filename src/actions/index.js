@@ -118,11 +118,14 @@ const mainLoadHtmlError = function () {
   };
 };
 
-export const mainLoadHtml = function () {
+export const mainLoadHtml = function (markdownId) {
   return function (dispatch, getState) {
-    const markdownId = getState().main.readMdId;
+    // 未传入id则说明不是通过点击进行切换
+    if(!markdownId) {
+      markdownId = getState().main.readMdId;
+    }
 
-    dispatch({type: MAIN_LOAD_HTML_REQUEST});
+    dispatch({type: MAIN_LOAD_HTML_REQUEST, payload: {readMdId: markdownId}});
     $.ajax({
       url: Api.BASE_URL + `markdown/${markdownId}`,
       headers: {"X-Access-Token": ''},
@@ -190,7 +193,6 @@ export const addMD = function (mdName, mdDes, proName) {
   return function (dispatch, getState) {
     const account = getState().loginDialog.account;
     if(!account) {
-
       dispatch(mainMsgOpen("账号未登录"));
       return;
     }

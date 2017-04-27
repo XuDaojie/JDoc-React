@@ -54,7 +54,7 @@ const loginDialog = function (state = {open: false, btnText: "登录", progressS
           open: false,
           progressStyle: style.progressNone,
           account: payload.data,
-          token: payload.data.token,
+          token: payload.token,
         };
       }
       return {

@@ -72,24 +72,43 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
-let NavDrawerContainer = function ({open, _requestChange,}) {
+let NavDrawerContainer = function ({open, data, _requestChange, _nestedListToggle}) {
   return (
     <Drawer
       open={open}
       docked={false}
       onRequestChange={_requestChange}>
-      <List style={{padding: 0}}>
-        <Toolbar style={{backgroundColor: '#00bcd4',}}/>
-        <ListItem primaryText="xxx"/>
-        <ListItem primaryText="xxx"/>
+      <Toolbar style={{backgroundColor: '#00bcd4',}}/>
+      <List >
+        {data.map(item => {
+          if (item.nestedItems) {
+            return <ListItem
+              key={item.id}
+              primaryText={item.name}
+              primaryTogglesNestedList={true}
+              nestedItems={item.nestedItems.map(function (nestedItem) {
+                return <ListItem
+                  key={nestedItem.id}
+                  primaryText={nestedItem.name}
+                  primaryTogglesNestedList={true}
+                  onNestedListToggle={_nestedListToggle.bind(this, nestedItem.id)}/>;
+              })}/>
+          } else {
+            return <ListItem
+              key={item.id}
+              primaryText={item.name}
+              primaryTogglesNestedList={true}/>;
+          }
+        })}
       </List>
     </Drawer>
   );
 };
 NavDrawerContainer.propTypes = {
   open: React.PropTypes.bool,
-  data: React.PropTypes.object,
+  data: React.PropTypes.array,
   _requestChange: React.PropTypes.func,
+  _nestedListToggle: React.PropTypes.func,
 };
 
 // 读取state
@@ -108,7 +127,9 @@ const mapDispatchToProps = function (dispatch, ownProps) {
     _requestChange: function (open) {
       dispatch(action.navOpenChange(open));
     },
-
+    _nestedListToggle: function (itemId) {
+      dispatch(action.mainLoadHtml(itemId))
+    }
   };
 };
 

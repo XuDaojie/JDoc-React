@@ -2,6 +2,7 @@
  * Created by xdj on 2017/4/26.
  */
 import {
+  MAIN_LOAD_HTML_REQUEST,
   MAIN_MSG_CLOSE,
   MAIN_MSG_OPEN,
   NOT_LOGIN
@@ -27,6 +28,11 @@ const main = function (state = {readMdId: 1, msgOpen: false,}, action) {
         ...state,
         msgOpen: false,
         msg: undefined,
+      };
+    case MAIN_LOAD_HTML_REQUEST:
+      return {
+        ...state,
+        readMdId: payload.readMdId,
       };
     default:
       return state;

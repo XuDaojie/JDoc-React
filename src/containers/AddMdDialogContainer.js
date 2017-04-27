@@ -18,7 +18,7 @@ const dataSource2 = ['12345', '23456', '34567', '12345', '23456', '34567', '1234
 
 let AddMdDialogContainer = function ({
                                        open, modal, disable, nameErrorMsg, pwdErrorMsg, proErrorMsg,
-                                       searchProName, btnText, progressStyle,
+                                       usedProName, btnText, progressStyle, proDataSource,
                                        onDialogClose, onInputChange, onBtnClick,
                                      }) {
   return (
@@ -44,27 +44,28 @@ let AddMdDialogContainer = function ({
         disabled={disable}
         fullWidth={true}
         onChange={onInputChange}/><br/>
-      <TextField
-        ref={function (input) {
-          pwdInput = input;
-        }}
-        floatingLabelText="密码"
-        // value={this.state.password}
-        errorText={pwdErrorMsg}
-        type="password"
-        disabled={disable}
-        fullWidth={true}
-        onChange={onInputChange}/>
+      {/*<TextField*/}
+        {/*ref={function (input) {*/}
+          {/*pwdInput = input;*/}
+        {/*}}*/}
+        {/*floatingLabelText="密码"*/}
+        {/*// value={this.state.password}*/}
+        {/*errorText={pwdErrorMsg}*/}
+        {/*type="password"*/}
+        {/*disabled={disable}*/}
+        {/*fullWidth={true}*/}
+        {/*onChange={onInputChange}/>*/}
       <AutoComplete
         ref={function (input) {
           proInput = input;
         }}
-        searchText={searchProName}
+        searchText={usedProName}
         floatingLabelText="归属项目"
         errorText={proErrorMsg}
         filter={AutoComplete.fuzzyFilter}
         openOnFocus={true}
-        dataSource={dataSource2}
+        dataSource={proDataSource}
+        dataSourceConfig={{text: "name", value: "name"}}
         fullWidth={true}/><br/>
       <RaisedButton
         label={btnText} primary={true} style={{marginTop: 16}}
@@ -85,7 +86,8 @@ AddMdDialogContainer.propTypes = {
   nameErrorMsg: React.PropTypes.string,
   pwdErrorMsg: React.PropTypes.string,
   proErrorMsg: React.PropTypes.string,
-  searchProName: React.PropTypes.string,
+  proDataSource: React.PropTypes.array,
+  usedProName: React.PropTypes.string,
   btnText: React.PropTypes.string,
   progressStyle: React.PropTypes.object,
   onBtnClick: React.PropTypes.func,
@@ -102,7 +104,8 @@ const mapStateToProps = function (state) {
     nameErrorMsg: state.addMdDialog.nameErrorMsg,
     pwdErrorMsg: state.addMdDialog.pwdErrorMsg,
     proErrorMsg: state.addMdDialog.proErrorMsg,
-    searchProName: state.addMdDialog.searchProName,
+    proDataSource: state.nav.data,
+    usedProName: state.addMdDialog.usedProName,
     btnText: state.addMdDialog.btnText,
     progressStyle: state.addMdDialog.progressStyle,
   }

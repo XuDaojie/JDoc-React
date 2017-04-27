@@ -49,6 +49,7 @@ const addMdDialog = function (state = {open: false, btnText: "保存", progressS
         modal: true,
         disable: true,
         progressStyle: style.progress,
+        usedProName: payload.usedProName, // 用于记录最近新建文档使用的项目
       };
     case ADD_MD_RECEIVE:
       if (action.payload.code === 0) {

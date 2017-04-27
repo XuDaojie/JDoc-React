@@ -197,7 +197,7 @@ export const addMD = function (mdName, mdDes, proName) {
       return;
     }
 
-    dispatch({type: ADD_MD_REQUEST});
+    dispatch({type: ADD_MD_REQUEST, payload: {usedProName: proName}});
     const userId = account.id;
     if(!userId) {
       return {

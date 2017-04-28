@@ -17,7 +17,7 @@ import * as Api from "../constants/Api";
 
 // ----common
 const isLogin = function (dispatch, getState) {
-  if(!getState().loginDialog.account) {
+  if (!getState().loginDialog.account) {
     dispatch({type: NOT_LOGIN});
     return false;
   }
@@ -55,7 +55,7 @@ const loginError = function () {
 };
 
 export const login = function (username, password) {
-  if(username.length === 0) {
+  if (username.length === 0) {
     return {
       type: LOGIN_USER_IS_NULL,
     }
@@ -121,7 +121,7 @@ const mainLoadHtmlError = function () {
 export const mainLoadHtml = function (markdownId) {
   return function (dispatch, getState) {
     // 未传入id则说明不是通过点击进行切换
-    if(!markdownId) {
+    if (!markdownId) {
       markdownId = getState().main.readMdId;
     }
 
@@ -148,7 +148,8 @@ export const editMdOnClick = function () {
     if (!account) {
       dispatch({type: NOT_LOGIN});
       return;
-    } {
+    }
+    {
       const token = getState().loginDialog.token;
       const userId = account.id;
       // window.open(Api.BASE_URL + `editormd.form?id=${readMdId}`);
@@ -184,7 +185,7 @@ const addMDError = function () {
 };
 
 export const addMD = function (mdName, mdDes, proName) {
-  if(mdName.length === 0) {
+  if (mdName.length === 0) {
     return {type: ADD_MD_NAME_IS_NULL,}
   } else if (proName.length === 0) {
     return {type: ADD_MD_PROJECT_IS_NULL,}
@@ -192,14 +193,14 @@ export const addMD = function (mdName, mdDes, proName) {
 
   return function (dispatch, getState) {
     const account = getState().loginDialog.account;
-    if(!account) {
+    if (!account) {
       dispatch(mainMsgOpen("账号未登录"));
       return;
     }
 
     dispatch({type: ADD_MD_REQUEST, payload: {usedProName: proName}});
     const userId = account.id;
-    if(!userId) {
+    if (!userId) {
       return {
         type: NOT_LOGIN
       }
@@ -228,12 +229,12 @@ export const addMD = function (mdName, mdDes, proName) {
 
 // --- drawer ---
 
-export const leftIconOnClick = function() {
+export const leftIconOnClick = function () {
   return function (dispatch, getState) {
     dispatch(navOpenChange(true));
   }
 };
-export const navOpenChange = function(open) {
+export const navOpenChange = function (open) {
   return {type: NAV_OPEN_CHANGE, payload: {open}};
 };
 
@@ -250,7 +251,7 @@ const navLoadError = function () {
   };
 };
 
-export const navLoad = function() {
+export const navLoad = function () {
   return function (dispatch, getState) {
     if (isLogin(dispatch, getState)) {
       dispatch({type: NAV_LOAD_REQUEST})
@@ -266,7 +267,22 @@ export const navLoad = function() {
         error: function (jqXHR, status, errorThrown) {
           dispatch(fetchError(status));
         },
-      })
+      });
+    } else {
+      dispatch({type: NAV_LOAD_REQUEST})
+      $.ajax({
+        // 获取公开的项目
+        url: Api.BASE_URL + `project`,
+        headers: {"X-Access-Token": ''},
+        success: function (result, jqXHR) {
+          // dispatch(navLoadReceive(result));
+          dispatch(fetchReceive(result, NAV_LOAD_RECEIVE));
+        },
+        error: function (jqXHR, status, errorThrown) {
+          dispatch(fetchError(status));
+        },
+
+      });
     }
   }
 };

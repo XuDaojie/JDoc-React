@@ -121,7 +121,6 @@ const mapStateToProps = function (state) {
 
 // 分发state
 const mapDispatchToProps = function (dispatch, ownProps) {
-  // login中已经进行过绑定，直接将dispatch传递过来
   dispatch(action.navLoad());
   return {
     _requestChange: function (open) {

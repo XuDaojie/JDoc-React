@@ -15,7 +15,7 @@ import * as action from '../actions';
 }
 {/*</Paper>*/
 }
-let AppBar = function ({dispatch}) {
+let AppBar = function ({title, loginStyle, addMdStyle, _menuOnClick, _loginOnClick, _addMdOnClick}) {
   return (
 
     <div style={{
@@ -28,26 +28,20 @@ let AppBar = function ({dispatch}) {
         style={{backgroundColor: '#00bcd4',}}>
 
         <ToolbarGroup firstChild={true}>
-          <IconButton onTouchTap={function () {
-            dispatch(action.navOpenChange(true));
-          }}>
+          <IconButton onTouchTap={_menuOnClick}>
             <FontIcon className="material-icons" color="white">menu</FontIcon>
           </IconButton>
-          <ToolbarTitle text="Toolbar" style={{color: 'white'}}/>
+          <ToolbarTitle text={title} style={{color: 'white'}}/>
         </ToolbarGroup>
         <ToolbarGroup lastChild={true}>
           <MenuItem
             primaryText="登陆"
-            style={{color: 'white'}}
-            onTouchTap={function () {
-              dispatch(action.loginOpenChange(true));
-            }}/>
+            style={loginStyle}
+            onTouchTap={_loginOnClick}/>
           <MenuItem
             primaryText="新建"
-            style={{color: 'white'}}
-            onTouchTap={function () {
-              dispatch(action.addMdOpenChange(true));
-            }}/>
+            style={addMdStyle}
+            onTouchTap={_addMdOnClick}/>
           <IconMenu
             iconButtonElement={<IconButton><MoreVertIcon color='white'/></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -66,5 +60,41 @@ let AppBar = function ({dispatch}) {
   );
 };
 
-AppBar = connect()(AppBar);
+AppBar.propTypes = {
+  title: React.PropTypes.string,
+  loginStyle: React.PropTypes.object,
+  addMdStyle: React.PropTypes.object,
+
+  _loginOnClick: React.PropTypes.func,
+  _addMdOnClick: React.PropTypes.func,
+};
+
+// 读取state
+const mapStateToProps = function (state) {
+  return {
+    title: state.appBar.title,
+    loginStyle: state.appBar.loginStyle,
+    addMdStyle: state.appBar.addMdStyle,
+  }
+};
+
+// 分发state
+const mapDispatchToProps = function (dispatch, ownProps) {
+  // login中已经进行过绑定，直接将dispatch传递过来
+  // todo 默认markdown——id
+  // dispatch(action.mainLoadHtml(5));
+  return {
+    _menuOnClick: function () {
+      dispatch(action.navOpenChange(true));
+    },
+    _loginOnClick: function () {
+      dispatch(action.loginOpenChange(true));
+    },
+    _addMdOnClick: function () {
+      dispatch(action.addMdOpenChange(true));
+    }
+  };
+};
+
+AppBar = connect(mapStateToProps, mapDispatchToProps)(AppBar);
 export default AppBar;

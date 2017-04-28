@@ -14,7 +14,7 @@ const style = {
   fabNone: {marginRight: 16, position: 'fixed', right: 64, bottom: 64, display: 'none'}
 };
 
-const main = function (state = {readMdId: 1, msgOpen: false,}, action) {
+const main = function (state = {readMdId: 1, msgOpen: false, fabStyle: style.fabNone}, action) {
   const payload = action.payload;
 
   switch (action.type) {

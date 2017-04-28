@@ -2,11 +2,17 @@
  * Created by xdj on 2017/4/26.
  */
 import {
+  LOGIN_RECEIVE,
   MAIN_LOAD_HTML_REQUEST,
   MAIN_MSG_CLOSE,
   MAIN_MSG_OPEN,
   NOT_LOGIN
 } from '../constants/ActionTypes';
+
+const style = {
+  fab: {marginRight: 16, position: 'fixed', right: 64, bottom: 64},
+  fabNone: {marginRight: 16, position: 'fixed', right: 64, bottom: 64, display: 'none'}
+};
 
 const main = function (state = {readMdId: 1, msgOpen: false,}, action) {
   const payload = action.payload;
@@ -16,6 +22,17 @@ const main = function (state = {readMdId: 1, msgOpen: false,}, action) {
       return {
         ...state,
         msg: "账号未登陆",
+      };
+    case LOGIN_RECEIVE:
+      if(payload.code === 0) {
+        return {
+          ...state,
+          fabStyle: style.fab,
+        };
+      }
+      return {
+        ...state,
+        fabStyle: style.fabNone,
       };
     case MAIN_MSG_OPEN:
       return {

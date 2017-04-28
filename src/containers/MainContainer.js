@@ -12,27 +12,23 @@ import ContentCreate from "material-ui/svg-icons/content/create";
 import AddMdDialogContainer from "./AddMdDialogContainer";
 import {Snackbar} from "material-ui";
 
-let MainContainer = function ({msgOpen, msg, ftbOnClick, msgOnClose}) {
-  const componentDidMount = function () {
-    console.log("xs");
-  };
-
+let MainContainer = function ({msgOpen, msg, fabStyle, _fabOnClick, _msgOnClose}) {
   return (
     <div>
       <Snackbar
         open={msgOpen}
         message={msg}
         autoHideDuration={3000}
-        onRequestClose={msgOnClose}
+        onRequestClose={_msgOnClose}
       />
       <AddMdDialogContainer/>
       <MdContainer/>
       <FloatingActionButton
         secondary={true}
         // 64\64
-        style={{marginRight: 16, position: 'fixed', right: 64, bottom: 64}}
+        style={fabStyle}
         zDepth={4}
-        onTouchTap={ftbOnClick}>
+        onTouchTap={_fabOnClick}>
         <ContentCreate />
       </FloatingActionButton>
       {/*<iframe src="http://localhost:8080/JDoc/index.jsp"/>*/}
@@ -43,8 +39,9 @@ let MainContainer = function ({msgOpen, msg, ftbOnClick, msgOnClose}) {
 MainContainer.propTypes = {
   msgOpen: React.PropTypes.bool,
   msg: React.PropTypes.string,
-  ftbOnClick: React.PropTypes.func,
-  msgOnClose: React.PropTypes.func,
+  fabStyle: React.PropTypes.object,
+  _fabOnClick: React.PropTypes.func,
+  _msgOnClose: React.PropTypes.func,
 };
 
 // 读取state
@@ -52,6 +49,7 @@ const mapStateToProps = function (state) {
   return {
     msgOpen: state.main.msgOpen,
     msg: state.main.msg,
+    fabStyle: state.main.fabStyle,
   }
 };
 
@@ -61,10 +59,10 @@ const mapDispatchToProps = function (dispatch, ownProps) {
   // todo 默认markdown——id
   // dispatch(action.mainLoadHtml(5));
   return {
-    ftbOnClick: function () {
+    _fabOnClick: function () {
       dispatch(action.editMdOnClick(true));
     },
-    msgOnClose: function () {
+    _msgOnClose: function () {
       dispatch(action.mainMsgClose());
     },
   };

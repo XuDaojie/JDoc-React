@@ -4,10 +4,12 @@
 import React from 'react';
 import {connect} from "react-redux";
 import MenuItem from 'material-ui/MenuItem';
+import IconMenu from 'material-ui/IconMenu';
 import FontIcon from 'material-ui/FontIcon';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import * as action from '../actions';
 {/*<Paper zDepth={1}>*/
 }
@@ -46,6 +48,18 @@ let AppBar = function ({dispatch}) {
             onTouchTap={function () {
               dispatch(action.addMdOpenChange(true));
             }}/>
+          <IconMenu
+            iconButtonElement={<IconButton><MoreVertIcon color='white'/></IconButton>}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem primaryText="Refresh" />
+            <MenuItem primaryText="Send feedback" />
+            <MenuItem primaryText="Settings" />
+            <MenuItem primaryText="Help" />
+            <MenuItem primaryText="Sign out" />
+          </IconMenu>
+
         </ToolbarGroup>
       </Toolbar>
     </div>

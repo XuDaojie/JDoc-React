@@ -17,10 +17,18 @@ const appBar = function (state = {
 
   switch (action.type) {
     case actionType.INIT:
-      return {
-        ...state,
-        loginStyle: style.none,
-      };
+      if (payload.isShared) {
+        return {
+          ...state,
+          loginStyle: style.none,
+        };
+      } else {
+        return {
+          ...state,
+          loginStyle: style.show,
+        };
+      }
+
     case actionType.LOGIN_RECEIVE:
       if (payload.code === 0) {
         return {

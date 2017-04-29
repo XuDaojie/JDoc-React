@@ -21,11 +21,15 @@ const main = function (state = {initParams:[], readMdId: 1, msgOpen: false, fabS
 
   switch (action.type) {
     case INIT:
-      return {
-        ...state,
-        initParams: payload.initParams,
-        readMdId: payload.readMdId,
-      };
+      if (payload.isShared) {
+        return {
+          ...state,
+          initParams: payload.initParams,
+          readMdId: payload.readMdId,
+        };
+      }
+      return state;
+
     case NOT_LOGIN:
       return {
         ...state,

@@ -55,7 +55,10 @@ const mapStateToProps = function (state) {
 
 // 分发state
 const mapDispatchToProps = function (dispatch, ownProps) {
-  // login中已经进行过绑定，直接将dispatch传递过来
+  dispatch(action.init());
+  dispatch(action.mainLoadHtml());
+  dispatch(action.navLoad());
+
   return {
     _fabOnClick: function () {
       dispatch(action.editMdOnClick(true));

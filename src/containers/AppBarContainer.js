@@ -89,9 +89,6 @@ const mapStateToProps = function (state) {
 
 // 分发state
 const mapDispatchToProps = function (dispatch, ownProps) {
-  // login中已经进行过绑定，直接将dispatch传递过来
-  // todo 默认markdown——id
-  // dispatch(action.mainLoadHtml(5));
   return {
     _menuOnClick: function () {
       dispatch(action.navOpenChange(true));

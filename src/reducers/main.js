@@ -2,6 +2,7 @@
  * Created by xdj on 2017/4/26.
  */
 import {
+  INIT,
   LOGIN_RECEIVE,
   MAIN_LOAD_HTML_REQUEST,
   MAIN_MSG_CLOSE,
@@ -14,10 +15,17 @@ const style = {
   fabNone: {marginRight: 16, position: 'fixed', right: 64, bottom: 64, display: 'none'}
 };
 
-const main = function (state = {readMdId: 1, msgOpen: false, fabStyle: style.fabNone}, action) {
+// initParams location.href 上的参数
+const main = function (state = {initParams:[], readMdId: 1, msgOpen: false, fabStyle: style.fabNone}, action) {
   const payload = action.payload;
 
   switch (action.type) {
+    case INIT:
+      return {
+        ...state,
+        initParams: payload.initParams,
+        readMdId: payload.readMdId,
+      };
     case NOT_LOGIN:
       return {
         ...state,

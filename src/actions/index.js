@@ -16,6 +16,30 @@ import $ from 'jquery';
 import * as tokenUtil from '../utils/tokenUtil';
 import * as Api from "../constants/Api";
 
+//----init----
+const getUrlParam = function () {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi,
+    function (m, key, value) {
+      vars[key] = value;
+    }
+  );
+  return vars;
+};
+export const init = function () {
+  const markdownId = getUrlParam()["markdown_id"];
+  if (!markdownId) {
+    return {type: actionType.INIT};
+  }
+  return {type: actionType.INIT, payload: {isShared: true, readMdId: markdownId, initParams: getUrlParam()}};
+};
+// 检查是否是分享的链接
+const isShared = function () {
+  // location.host
+
+  return true;
+};
+
 // ----common
 const isLogin = function (dispatch, getState) {
   if (!getState().loginDialog.account) {

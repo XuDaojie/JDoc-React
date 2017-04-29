@@ -8,7 +8,7 @@ const style = {
   none: {display: 'none'}
 };
 
-const nav = function (state = {
+const appBar = function (state = {
   title: undefined,
   loginStyle: style.show,
   addMdStyle: style.none
@@ -16,6 +16,11 @@ const nav = function (state = {
   const payload = action.payload;
 
   switch (action.type) {
+    case actionType.INIT:
+      return {
+        ...state,
+        loginStyle: style.none,
+      };
     case actionType.LOGIN_RECEIVE:
       if (payload.code === 0) {
         return {
@@ -32,4 +37,4 @@ const nav = function (state = {
   }
 };
 
-export default nav;
+export default appBar;

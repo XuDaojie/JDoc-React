@@ -121,7 +121,6 @@ const mapStateToProps = function (state) {
 
 // 分发state
 const mapDispatchToProps = function (dispatch, ownProps) {
-  dispatch(action.navLoad());
   return {
     _requestChange: function (open) {
       dispatch(action.navOpenChange(open));

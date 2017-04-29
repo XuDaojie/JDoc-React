@@ -1,6 +1,7 @@
 /**
  * Created by xdj on 2017/4/24.
  */
+export const INIT = "INIT";
 
 export const MAIN_MSG_OPEN = "MAIN_MSG_OPEN";
 export const MAIN_MSG_CLOSE = "MAIN_MSG_CLOSE";

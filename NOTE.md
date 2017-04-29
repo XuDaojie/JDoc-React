@@ -79,3 +79,16 @@ http://bbs.csdn.net/topics/390978390?page=1<br>
 需要使用post来模拟<br>
 https://segmentfault.com/a/1190000000580058<br>
 
+- 写给Web开发人员看的Nginx介绍<br>
+https://fraserxu.me/2013/06/22/Nginx-for-developers/<br>
+
+- Nginx安装与使用<br>
+http://www.cnblogs.com/skynet/p/4146083.html<br>
+
+- react实战（四） nginx生产部署和优化<br>
+http://www.jianshu.com/p/8d76debc0f49<br>
+关闭Nginx进程
+ps -ef|grep nginx 查看进程号
+kill 进程号
+
+

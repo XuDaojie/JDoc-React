@@ -11,6 +11,7 @@ import {
   NAV_OPEN_CHANGE, NAV_LOAD, NAV_LOAD_REQUEST, NAV_LOAD_RECEIVE, NAV_LOAD_ERROR,
   COOMON_FETCH_ERROR
 } from '../constants/ActionTypes';
+import * as actionType from '../constants/ActionTypes';
 import $ from 'jquery';
 import * as tokenUtil from '../utils/tokenUtil';
 import * as Api from "../constants/Api";
@@ -124,11 +125,14 @@ export const mainLoadHtml = function (markdownId) {
     if (!markdownId) {
       markdownId = getState().main.readMdId;
     }
-
+    let token = '';
+    if (getState().loginDialog.token !== undefined) {
+      token = getState().loginDialog.token;
+    }
     dispatch({type: MAIN_LOAD_HTML_REQUEST, payload: {readMdId: markdownId}});
     $.ajax({
       url: Api.BASE_URL + `markdown/${markdownId}`,
-      headers: {"X-Access-Token": ''},
+      headers: {"X-Access-Token": token},
       success: function (result, jqXHR) {
         dispatch(mainLoadHtmlReceive(result));
       },
@@ -285,5 +289,10 @@ export const navLoad = function () {
       });
     }
   }
+};
+
+//---SharedDialog---
+export const sharedOpenChange = function (open) {
+  return {type: actionType.SHARED_OPEN_CHANGE, payload: {open}}
 };
 

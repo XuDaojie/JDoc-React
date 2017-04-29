@@ -8,6 +8,7 @@ import LoginDialogContainer from "./containers/LoginDialogContainer";
 import AppBar from './containers/AppBarContainer';
 import MainContainer from "./containers/MainContainer";
 import NavDrawerContainer from "./containers/NavDrawerContainer";
+import SharedDialogContainer from "./containers/SharedDialogContainer";
 
 class App extends Component {
 
@@ -21,6 +22,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
+          <SharedDialogContainer/>
           <NavDrawerContainer/>
           <LoginDialogContainer/>
           <AppBar/>

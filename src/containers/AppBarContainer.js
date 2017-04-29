@@ -15,7 +15,10 @@ import * as action from '../actions';
 }
 {/*</Paper>*/
 }
-let AppBar = function ({title, loginStyle, addMdStyle, _menuOnClick, _loginOnClick, _addMdOnClick}) {
+let AppBar = function ({
+                         title, loginStyle, addMdStyle, _menuOnClick, _loginOnClick,
+                         _sharedOnClick, _addMdOnClick
+                       }) {
   return (
 
     <div style={{
@@ -39,6 +42,10 @@ let AppBar = function ({title, loginStyle, addMdStyle, _menuOnClick, _loginOnCli
             style={loginStyle}
             onTouchTap={_loginOnClick}/>
           <MenuItem
+            primaryText="分享"
+            style={addMdStyle}
+            onTouchTap={_sharedOnClick}/>
+          <MenuItem
             primaryText="新建"
             style={addMdStyle}
             onTouchTap={_addMdOnClick}/>
@@ -47,11 +54,11 @@ let AppBar = function ({title, loginStyle, addMdStyle, _menuOnClick, _loginOnCli
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MenuItem primaryText="Refresh" />
-            <MenuItem primaryText="Send feedback" />
-            <MenuItem primaryText="Settings" />
-            <MenuItem primaryText="Help" />
-            <MenuItem primaryText="Sign out" />
+            <MenuItem primaryText="Refresh"/>
+            <MenuItem primaryText="Send feedback"/>
+            <MenuItem primaryText="Settings"/>
+            <MenuItem primaryText="Help"/>
+            <MenuItem primaryText="Sign out"/>
           </IconMenu>
 
         </ToolbarGroup>
@@ -65,7 +72,9 @@ AppBar.propTypes = {
   loginStyle: React.PropTypes.object,
   addMdStyle: React.PropTypes.object,
 
+  _menuOnClick: React.PropTypes.func,
   _loginOnClick: React.PropTypes.func,
+  _sharedOnClick: React.PropTypes.func,
   _addMdOnClick: React.PropTypes.func,
 };
 
@@ -89,6 +98,9 @@ const mapDispatchToProps = function (dispatch, ownProps) {
     },
     _loginOnClick: function () {
       dispatch(action.loginOpenChange(true));
+    },
+    _sharedOnClick: function () {
+      dispatch(action.sharedOpenChange(true));
     },
     _addMdOnClick: function () {
       dispatch(action.addMdOpenChange(true));

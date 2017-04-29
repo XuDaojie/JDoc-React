@@ -29,7 +29,7 @@ const getUrlParam = function () {
 export const init = function () {
   const markdownId = getUrlParam()["markdown_id"];
   if (!markdownId) {
-    return {type: actionType.INIT};
+    return {type: actionType.INIT, payload: {isShared: false, initParams: []}};
   }
   return {type: actionType.INIT, payload: {isShared: true, readMdId: markdownId, initParams: getUrlParam()}};
 };

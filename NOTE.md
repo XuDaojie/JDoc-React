@@ -92,3 +92,5 @@ ps -ef|grep nginx 查看进程号
 kill 进程号
 
 
+- 详说 Cookie, LocalStorage 与 SessionStorage
+http://jerryzou.com/posts/cookie-and-web-storage/

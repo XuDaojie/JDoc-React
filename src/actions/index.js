@@ -27,11 +27,22 @@ const getUrlParam = function () {
   return vars;
 };
 export const init = function () {
-  const markdownId = getUrlParam()["markdown_id"];
-  if (!markdownId) {
-    return {type: actionType.INIT, payload: {isShared: false, initParams: []}};
-  }
-  return {type: actionType.INIT, payload: {isShared: true, readMdId: markdownId, initParams: getUrlParam()}};
+  return function (dispatch, getState) {
+    const markdownId = getUrlParam()["markdown_id"];
+    const oldState = localStorage.getItem("state");
+    let payload = {};
+    if (oldState !== undefined) {
+      payload = {oldState};
+    }
+    if (!markdownId) {
+      return {type: actionType.INIT, payload: {isShared: false, initParams: []}};
+    }
+    return {
+      type: actionType.INIT,
+      payload: {isShared: true, readMdId: markdownId, initParams: getUrlParam()}
+    };
+  };
+
 };
 // 检查是否是分享的链接
 const isShared = function () {
@@ -98,10 +109,12 @@ export const login = function (username, password) {
       success: function (result, jqXHR) {
         if (result.code === 0) {
           // dispatch(fetchReceive(result, LOGIN_RECEIVE));
-          dispatch(loginReceive(result))
-          dispatch(navLoad())
+          dispatch(loginReceive(result));
+          // document.cookie = `state=${JSON.stringify(getState())}; expires=Thu, 18 Dec 2021 12:00:00 GMT`;
+          localStorage.setItem("state", JSON.stringify(getState()));
+          dispatch(navLoad());
         } else {
-          dispatch(fetchWarn(result))
+          dispatch(fetchWarn(result));
         }
       },
       error: function (jqXHR, status, errorThrown) {

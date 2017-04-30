@@ -128,6 +128,69 @@ export const inputChange = function () {
   return {type: LOGIN_INPUT_CHANGE};
 };
 
+// ----register
+export const registerOpenChange = function (open) {
+  return {
+    type: actionType.REGISTER_OPEN_CHANGE,
+    payload: {open: open},
+  }
+};
+
+const registerReceive = function (result) {
+  return {type: actionType.REGISTER_RECEIVE, payload: result};
+};
+
+const registerError = function () {
+  return {type: actionType.REGISTER_ERROR}
+};
+
+const registerWarn = function (result) {
+  return {type: actionType.REGISTER_WARN, payload: result}
+};
+
+export const register = function (username, password, password2) {
+  if (username.length === 0) {
+    return {
+      type: actionType.REGISTER_USER_IS_NULL,
+    }
+  } else if (password.length === 0) {
+    return {
+      type: actionType.REGISTER_PWD_IS_NULL,
+    }
+  } else if (password2.length === 0) {
+    return {
+      type: actionType.REGISTER_PWD1_IS_NULL,
+    }
+  } else if (password !== password2) {
+    return {
+      type: actionType.REGISTER_PWD_NOT_SAME,
+    }
+  }
+  return function (dispatch, getState) {
+    dispatch({type: actionType.REGISTER_REQUEST});
+    $.ajax({
+      type: 'POST',
+      url: Api.ACCOUNT,
+      headers: {"X-Access-Token": ''},
+      data: {username, password},
+      success: function (result, jqXHR) {
+        if (result.code === 0) {
+          dispatch(registerReceive(result));
+        } else {
+          dispatch(registerWarn(result));
+        }
+      },
+      error: function (jqXHR, status, errorThrown) {
+        dispatch(registerError());
+      },
+    })
+  };
+};
+
+export const registerInputChange = function () {
+  return {type: actionType.REGISTER_INPUT_CHANGE};
+};
+
 // appBar--
 export const signOut = function () {
   localStorage.removeItem("state");

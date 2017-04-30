@@ -9,6 +9,7 @@ import AppBar from './containers/AppBarContainer';
 import MainContainer from "./containers/MainContainer";
 import NavDrawerContainer from "./containers/NavDrawerContainer";
 import SharedDialogContainer from "./containers/SharedDialogContainer";
+import RegisterDialogContainer from "./containers/RegisterDialogContainer";
 
 class App extends Component {
 
@@ -25,6 +26,7 @@ class App extends Component {
           <SharedDialogContainer/>
           <NavDrawerContainer/>
           <LoginDialogContainer/>
+          <RegisterDialogContainer/>
           <AppBar/>
           <MainContainer/>
         </div>

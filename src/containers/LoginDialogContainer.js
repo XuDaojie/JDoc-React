@@ -15,7 +15,7 @@ let userInput, pwdInput;
 let LoginDialogContainer = function ({
                                        open, modal, disable, userErrorMsg, pwdErrorMsg, btnText,
                                        progressStyle,
-                                       onDialogClose, onInputChange, onBtnClick,
+                                       onDialogClose, onInputChange, onBtnClick, onRegisterClick,
                                      }) {
   return (
     <Dialog
@@ -51,7 +51,10 @@ let LoginDialogContainer = function ({
       <LinearProgress
         mode="indeterminate" color="#0288D1"
         style={progressStyle}/>
-      <div style={{textAlign: 'center', fontSize: 14, marginTop: 16}}>注册账号</div>
+      <div style={{textAlign: 'center', marginTop: 16}}>
+        <a href="#" style={{fontSize: 14,}} onClick={onRegisterClick}>注册账号</a>
+      </div>
+
     </Dialog>
   );
 };
@@ -67,6 +70,7 @@ LoginDialogContainer.propTypes = {
   onBtnClick: React.PropTypes.func,
   onDialogClose: React.PropTypes.func,
   onInputChange: React.PropTypes.func,
+  onRegisterClick: React.PropTypes.func,
 };
 
 // 读取state
@@ -96,7 +100,10 @@ const mapDispatchToProps = function (dispatch, ownProps) {
     },
     onInputChange: function (e, newVal) {
       dispatch(action.inputChange());
-    }
+    },
+    onRegisterClick: function () {
+      dispatch(action.registerOpenChange(true));
+    },
   };
 };
 

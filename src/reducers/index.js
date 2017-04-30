@@ -9,11 +9,13 @@ import main from "./main";
 import nav from "./nav";
 import appBar from "./appBar";
 import sharedDialog from "./sharedDialog";
+import registerDialog from "./registerDialog";
 
 const reducerIndex = combineReducers ({
   appBar,
   main,
   loginDialog,
+  registerDialog,
   sharedDialog,
   md,
   addMdDialog,

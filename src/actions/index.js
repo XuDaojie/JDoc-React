@@ -275,6 +275,9 @@ export const addMD = function (mdName, mdDes, proName) {
 };
 
 // --- drawer ---
+export const drawerDockedChange = function (docked) {
+  return {type: actionType.NAV_DOCKED_CHANGE, payload: {docked}};
+};
 
 export const leftIconOnClick = function () {
   return function (dispatch, getState) {

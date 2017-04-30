@@ -72,11 +72,11 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
-let NavDrawerContainer = function ({open, data, _requestChange, _nestedListToggle}) {
+let NavDrawerContainer = function ({open, docked, data, _requestChange, _nestedListToggle}) {
   return (
     <Drawer
       open={open}
-      docked={false}
+      docked={docked}
       onRequestChange={_requestChange}>
       <Toolbar style={{backgroundColor: '#00bcd4',}}/>
       <List >
@@ -115,12 +115,32 @@ NavDrawerContainer.propTypes = {
 const mapStateToProps = function (state) {
   return {
     open: state.nav.open,
+    docked: state.nav.docked,
     data: state.nav.data,
   }
 };
 
 // 分发state
 const mapDispatchToProps = function (dispatch, ownProps) {
+  let width = document.documentElement.clientWidth;
+  let height = document.documentElement.clientHeight;
+
+  if (width / height > 1.75) {
+    dispatch(action.navOpenChange(true));
+    dispatch(action.drawerDockedChange(true));
+  } else {
+    dispatch(action.drawerDockedChange(false));
+  }
+  window.onresize = function () {
+    width = document.documentElement.clientWidth;
+    height = document.documentElement.clientHeight;
+    if (width / height > 1.75) {
+      dispatch(action.navOpenChange(true));
+      dispatch(action.drawerDockedChange(true));
+    } else {
+      dispatch(action.drawerDockedChange(false));
+    }
+  };
   return {
     _requestChange: function (open) {
       dispatch(action.navOpenChange(open));

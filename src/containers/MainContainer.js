@@ -13,6 +13,9 @@ import AddMdDialogContainer from "./AddMdDialogContainer";
 import {Snackbar} from "material-ui";
 
 let MainContainer = function ({msgOpen, msg, fabStyle, _fabOnClick, _msgOnClose}) {
+  // window.addEventListener('resize', function () {
+  //   console.log("xx");
+  // });
   return (
     <div>
       <Snackbar

@@ -35,6 +35,7 @@ export const NAV_LOAD = "NAV_LOAD";
 export const NAV_LOAD_REQUEST = "NAV_LOAD_REQUEST";
 export const NAV_LOAD_RECEIVE  = "NAV_LOAD_RECEIVE";
 export const NAV_LOAD_ERROR = "NAV_LOAD_ERROR";
+export const NAV_DOCKED_CHANGE = "NAV_DOCKED_CHANGE";
 
 export const COOMON_FETCH_ERROR = "COOMON_FETCH_ERROR";
 

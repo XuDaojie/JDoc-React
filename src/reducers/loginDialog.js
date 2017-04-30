@@ -5,7 +5,7 @@ import {
   LOGIN_OPEN_CHANGE, LOGIN_REQUEST, LOGIN_RECEIVE, LOGIN_ERROR, LOGIN_INPUT_CHANGE,
   LOGIN_USER_IS_NULL, LOGIN_PWD_IS_NULL
 } from '../constants/ActionTypes'
-
+import * as actionTypes from '../constants/ActionTypes'
 /*
  {
  open, disable, userErrorMsg, pwdErrorMsg, btnText,
@@ -26,6 +26,12 @@ const loginDialog = function (state = {open: false, btnText: "登录", progressS
   const payload = action.payload;
 
   switch (action.type) {
+    case actionTypes.SIGN_OUT:
+      return {
+        ...state,
+        account: undefined,
+        token: undefined,
+      };
     case LOGIN_OPEN_CHANGE:
       return {
         ...state,

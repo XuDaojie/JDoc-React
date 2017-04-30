@@ -17,7 +17,7 @@ import * as action from '../actions';
 }
 let AppBar = function ({
                          title, loginStyle, addMdStyle, _menuOnClick, _loginOnClick,
-                         _sharedOnClick, _addMdOnClick
+                         _sharedOnClick, _addMdOnClick, _signOutOnClick
                        }) {
   return (
 
@@ -58,7 +58,8 @@ let AppBar = function ({
             <MenuItem primaryText="Send feedback"/>
             <MenuItem primaryText="Settings"/>
             <MenuItem primaryText="Help"/>
-            <MenuItem primaryText="Sign out"/>
+            <MenuItem primaryText="Sign out"
+                      onTouchTap={_signOutOnClick}/>
           </IconMenu>
 
         </ToolbarGroup>
@@ -76,6 +77,7 @@ AppBar.propTypes = {
   _loginOnClick: React.PropTypes.func,
   _sharedOnClick: React.PropTypes.func,
   _addMdOnClick: React.PropTypes.func,
+  _signOutOnClick: React.PropTypes.func,
 };
 
 // 读取state
@@ -101,6 +103,11 @@ const mapDispatchToProps = function (dispatch, ownProps) {
     },
     _addMdOnClick: function () {
       dispatch(action.addMdOpenChange(true));
+    },
+    _signOutOnClick: function () {
+      dispatch(action.signOut());
+      location.reload(false);
+      // dispatch(action.init());
     }
   };
 };

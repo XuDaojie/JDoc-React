@@ -125,7 +125,13 @@ export const login = function (username, password) {
 };
 
 export const inputChange = function () {
-  return {type: LOGIN_INPUT_CHANGE}
+  return {type: LOGIN_INPUT_CHANGE};
+};
+
+// appBar--
+export const signOut = function () {
+  localStorage.removeItem("state");
+  return {type: actionType.SIGN_OUT};
 };
 
 //--------Main--------
@@ -332,4 +338,5 @@ export const navLoad = function () {
 export const sharedOpenChange = function (open) {
   return {type: actionType.SHARED_OPEN_CHANGE, payload: {open}}
 };
+
 

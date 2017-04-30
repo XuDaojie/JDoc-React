@@ -9,6 +9,7 @@ import {
   MAIN_MSG_OPEN,
   NOT_LOGIN
 } from '../constants/ActionTypes';
+import * as actionTypes from '../constants/ActionTypes';
 
 const style = {
   fab: {marginRight: 16, position: 'fixed', right: 64, bottom: 64},
@@ -16,7 +17,12 @@ const style = {
 };
 
 // initParams location.href 上的参数
-const main = function (state = {initParams:[], readMdId: 1, msgOpen: false, fabStyle: style.fabNone}, action) {
+const main = function (state = {
+  initParams: [],
+  readMdId: 1,
+  msgOpen: false,
+  fabStyle: style.fabNone
+}, action) {
   const payload = action.payload;
 
   switch (action.type) {
@@ -27,16 +33,21 @@ const main = function (state = {initParams:[], readMdId: 1, msgOpen: false, fabS
           initParams: payload.initParams,
           readMdId: payload.readMdId,
         };
+      } else {
       }
       return state;
-
+    case actionTypes.SIGN_OUT:
+      return {
+        ...state,
+        readMdId: 1,
+      };
     case NOT_LOGIN:
       return {
         ...state,
         msg: "账号未登陆",
       };
     case LOGIN_RECEIVE:
-      if(payload.code === 0) {
+      if (payload.code === 0) {
         return {
           ...state,
           fabStyle: style.fab,

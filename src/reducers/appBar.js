@@ -11,7 +11,8 @@ const style = {
 const appBar = function (state = {
   title: undefined,
   loginStyle: style.show,
-  addMdStyle: style.none
+  addMdStyle: style.none,
+  moreVertStyle: style.none,
 }, action) {
   const payload = action.payload;
 
@@ -35,6 +36,7 @@ const appBar = function (state = {
           ...state,
           loginStyle: style.none,
           addMdStyle: style.show,
+          moreVertStyle: style.show,
         };
       }
       return {

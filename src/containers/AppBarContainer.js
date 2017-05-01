@@ -16,8 +16,8 @@ import * as action from '../actions';
 {/*</Paper>*/
 }
 let AppBar = function ({
-                         title, loginStyle, addMdStyle, _menuOnClick, _loginOnClick,
-                         _sharedOnClick, _addMdOnClick, _signOutOnClick
+                         title, loginStyle, addMdStyle, moreVertStyle,
+                         _menuOnClick, _loginOnClick, _sharedOnClick, _addMdOnClick, _signOutOnClick
                        }) {
   return (
 
@@ -50,14 +50,15 @@ let AppBar = function ({
             style={addMdStyle}
             onTouchTap={_addMdOnClick}/>
           <IconMenu
+            style={moreVertStyle}
             iconButtonElement={<IconButton><MoreVertIcon color='white'/></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MenuItem primaryText="Refresh"/>
-            <MenuItem primaryText="Send feedback"/>
-            <MenuItem primaryText="Settings"/>
-            <MenuItem primaryText="Help"/>
+            {/*<MenuItem primaryText="Refresh"/>*/}
+            {/*<MenuItem primaryText="Send feedback"/>*/}
+            {/*<MenuItem primaryText="Settings"/>*/}
+            {/*<MenuItem primaryText="Help"/>*/}
             <MenuItem primaryText="Sign out"
                       onTouchTap={_signOutOnClick}/>
           </IconMenu>
@@ -72,6 +73,7 @@ AppBar.propTypes = {
   title: React.PropTypes.string,
   loginStyle: React.PropTypes.object,
   addMdStyle: React.PropTypes.object,
+  moreVertStyle: React.PropTypes.object,
 
   _menuOnClick: React.PropTypes.func,
   _loginOnClick: React.PropTypes.func,
@@ -86,6 +88,7 @@ const mapStateToProps = function (state) {
     title: state.appBar.title,
     loginStyle: state.appBar.loginStyle,
     addMdStyle: state.appBar.addMdStyle,
+    moreVertStyle: state.appBar.moreVertStyle,
   }
 };
 

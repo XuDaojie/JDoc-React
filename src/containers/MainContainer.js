@@ -59,7 +59,7 @@ const mapStateToProps = function (state) {
 // 分发state
 const mapDispatchToProps = function (dispatch, ownProps) {
   dispatch(action.init());
-  dispatch(action.mainLoadHtml());
+  // dispatch(action.mainLoadHtml());
   dispatch(action.navLoad());
 
   return {

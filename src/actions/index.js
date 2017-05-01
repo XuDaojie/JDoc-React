@@ -367,7 +367,7 @@ const navLoadError = function () {
 export const navLoad = function () {
   return function (dispatch, getState) {
     if (isLogin(dispatch, getState)) {
-      dispatch({type: NAV_LOAD_REQUEST})
+      dispatch({type: NAV_LOAD_REQUEST});
       const account = getState().loginDialog.account;
       const user_id = account.id;
       $.ajax({
@@ -376,6 +376,9 @@ export const navLoad = function () {
         success: function (result, jqXHR) {
           // dispatch(navLoadReceive(result));
           dispatch(fetchReceive(result, NAV_LOAD_RECEIVE));
+          if(result.code === 0 && result.data.length > 0 && result.data[0].nestedItems.length > 0) {
+            dispatch(mainLoadHtml(result.data[0].nestedItems[0].id));
+          }
         },
         error: function (jqXHR, status, errorThrown) {
           dispatch(fetchError(status));

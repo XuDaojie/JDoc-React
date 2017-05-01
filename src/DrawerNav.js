@@ -17,8 +17,6 @@ import AppBar from 'material-ui/AppBar';
 
 import $ from 'jquery/dist/jquery.min';
 
-const BASE_URL = "http://localhost:8080/JDoc/";
-
 const style = {
   root: {
     display: "flex",

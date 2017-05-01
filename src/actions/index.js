@@ -400,6 +400,51 @@ export const navLoad = function () {
   }
 };
 
+const navDelMDReceive = function (result) {
+  if (result.code === 0) {
+    return {type: actionType.NAV_DEL_MD_SUCCESS, payload: result};
+  }
+  return {type: actionType.NAV_DEL_MD_WARN, payload: result};
+};
+
+const navDelMDError = function () {
+  return {type: actionType.NAV_DEL_MD_ERROR};
+};
+
+export const navDelMd = function (markdownId) {
+  return function (dispatch, getState) {
+    // 未传入id则说明不是通过点击进行切换
+    if (!markdownId) {
+      markdownId = getState().main.readMdId;
+    }
+    let token = '';
+    if (getState().loginDialog.token !== undefined) {
+      token = getState().loginDialog.token;
+    }
+    dispatch({type: actionType.NAV_DEL_MD_REQUEST, payload: {readMdId: markdownId}});
+    $.ajax({
+      type: 'POST',
+      url: Api.BASE_URL + `markdown`,
+      headers: {"X-Access-Token": token},
+      data: {
+        _method: 'DELETE',
+        markdown_id: markdownId,
+      },
+      success: function (result, jqXHR) {
+        dispatch(navDelMDReceive(result));
+        if (result.code === 0) {
+          location.reload();
+        }
+      },
+      error: function (jqXHR, status, errorThrown) {
+        dispatch(navDelMDError());
+      },
+    });
+  };
+
+  // return {type: MAIN_LOAD_HTML, payload: {markdown_id}}
+};
+
 //---SharedDialog---
 export const sharedOpenChange = function (open) {
   return {type: actionType.SHARED_OPEN_CHANGE, payload: {open}}

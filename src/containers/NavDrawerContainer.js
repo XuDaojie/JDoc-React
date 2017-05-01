@@ -9,17 +9,12 @@ import PropTypes from 'prop-types';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import {List, ListItem, makeSelectable} from 'material-ui/List';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import Subheader from 'material-ui/Subheader';
-import Toggle from 'material-ui/Toggle';
 import Toolbar from "material-ui/Toolbar";
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import $ from 'jquery/dist/jquery.min';
-
-const BASE_URL = "http://localhost:8080/JDoc/";
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 
 const style = {
   root: {
@@ -36,6 +31,30 @@ const style = {
     // overflowY: 'auto',
   },
 };
+
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    // tooltip="more"
+    // tooltipPosition="bottom-left"
+  >
+    <MoreVertIcon color={grey400}/>
+  </IconButton>
+);
+
+const rightIconMenu = (
+  <IconMenu iconButtonElement={iconButtonElement}
+            onItemTouchTap={function (e, child) {
+              console.log("x");
+            }}>
+    <MenuItem>Reply</MenuItem>
+    <MenuItem>Forward</MenuItem>
+    <MenuItem onTouchTap={function (e) {
+      console.log(e);
+    }}>Delete</MenuItem>
+  </IconMenu>
+);
+
 
 let SelectableList = makeSelectable(List);
 
@@ -72,7 +91,10 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
-let NavDrawerContainer = function ({open, docked, data, _requestChange, _nestedListToggle}) {
+let NavDrawerContainer = function ({
+                                     open, docked, data,
+                                     _requestChange, _nestedListToggle, _nestedItemRightIconTap
+                                   }) {
   return (
     <Drawer
       open={open}
@@ -91,6 +113,13 @@ let NavDrawerContainer = function ({open, docked, data, _requestChange, _nestedL
                   key={nestedItem.id}
                   primaryText={nestedItem.name}
                   primaryTogglesNestedList={true}
+                  rightIconButton={
+                    <IconMenu iconButtonElement={iconButtonElement}>
+                      {/*<MenuItem>Reply</MenuItem>*/}
+                      {/*<MenuItem>Forward</MenuItem>*/}
+                      <MenuItem onTouchTap={_nestedItemRightIconTap.bind(this, nestedItem.id)}>Delete</MenuItem>
+                    </IconMenu>
+                  }
                   onNestedListToggle={_nestedListToggle.bind(this, nestedItem.id)}/>;
               })}/>
           } else {
@@ -109,6 +138,7 @@ NavDrawerContainer.propTypes = {
   data: React.PropTypes.array,
   _requestChange: React.PropTypes.func,
   _nestedListToggle: React.PropTypes.func,
+  _nestedItemRightIconTap: React.PropTypes.func,
 };
 
 // 读取state
@@ -147,6 +177,9 @@ const mapDispatchToProps = function (dispatch, ownProps) {
     },
     _nestedListToggle: function (itemId) {
       dispatch(action.mainLoadHtml(itemId))
+    },
+    _nestedItemRightIconTap: function (itemId) {
+      dispatch(action.navDelMd(itemId));
     }
   };
 };

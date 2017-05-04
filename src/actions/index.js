@@ -107,14 +107,12 @@ export const login = function (username, password) {
       url: Api.ACCOUNT,
       headers: {"Authorization": `Basic ${auth}`},
       success: function (result, jqXHR) {
+        dispatch(loginReceive(result));
         if (result.code === 0) {
           // dispatch(fetchReceive(result, LOGIN_RECEIVE));
-          dispatch(loginReceive(result));
           // document.cookie = `state=${JSON.stringify(getState())}; expires=Thu, 18 Dec 2021 12:00:00 GMT`;
           localStorage.setItem("state", JSON.stringify(getState()));
           dispatch(navLoad());
-        } else {
-          dispatch(fetchWarn(result));
         }
       },
       error: function (jqXHR, status, errorThrown) {
@@ -393,6 +391,9 @@ export const navLoad = function () {
         success: function (result, jqXHR) {
           // dispatch(navLoadReceive(result));
           dispatch(fetchReceive(result, NAV_LOAD_RECEIVE));
+          if(result.code === 0 && result.data.length > 0 && result.data[0].nestedItems.length > 0) {
+            dispatch(mainLoadHtml(result.data[0].nestedItems[0].id));
+          }
         },
         error: function (jqXHR, status, errorThrown) {
           dispatch(fetchError(status));
@@ -411,7 +412,8 @@ const navDelMDReceive = function (result) {
 };
 
 const navDelMDError = function () {
-  return {type: actionType.NAV_DEL_MD_ERROR};
+  // return {type: actionType.NAV_DEL_MD_ERROR};
+  return {type: actionType.MAIN_MSG_OPEN, payload: {msg: "删除出错或无权限删除"}}
 };
 
 export const navDelMd = function (markdownId) {

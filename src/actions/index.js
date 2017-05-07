@@ -13,7 +13,6 @@ import {
 } from '../constants/ActionTypes';
 import * as actionType from '../constants/ActionTypes';
 import $ from 'jquery';
-import * as tokenUtil from '../utils/tokenUtil';
 import * as Api from "../constants/Api";
 
 //----init----
@@ -313,17 +312,17 @@ export const addMD = function (mdName, mdDes, proName) {
         type: NOT_LOGIN
       }
     }
-    const sJWT = tokenUtil.create({
-      user_id: userId,
-      project_name: proName,
-      name: mdName,
-      content: undefined,
-      description: mdDes,
-    });
     $.ajax({
       url: Api.BASE_URL + `markdown`,
       type: 'POST',
-      headers: {"X-Access-Token": sJWT},
+      headers: {"X-Access-Token": getState().loginDialog.token},
+      data: {
+        user_id: userId,
+        project_name: proName,
+        name: mdName,
+        content: undefined,
+        description: mdDes,
+      },
       success: function (result, jqXHR) {
         dispatch(addMDReceive(result));
       },
@@ -374,7 +373,7 @@ export const navLoad = function () {
         success: function (result, jqXHR) {
           // dispatch(navLoadReceive(result));
           dispatch(fetchReceive(result, NAV_LOAD_RECEIVE));
-          if(result.code === 0 && result.data.length > 0 && result.data[0].nestedItems.length > 0) {
+          if (result.code === 0 && result.data.length > 0 && result.data[0].nestedItems.length > 0) {
             dispatch(mainLoadHtml(result.data[0].nestedItems[0].id));
           }
         },
@@ -391,7 +390,7 @@ export const navLoad = function () {
         success: function (result, jqXHR) {
           // dispatch(navLoadReceive(result));
           dispatch(fetchReceive(result, NAV_LOAD_RECEIVE));
-          if(result.code === 0 && result.data.length > 0 && result.data[0].nestedItems.length > 0) {
+          if (result.code === 0 && result.data.length > 0 && result.data[0].nestedItems.length > 0) {
             dispatch(mainLoadHtml(result.data[0].nestedItems[0].id));
           }
         },
